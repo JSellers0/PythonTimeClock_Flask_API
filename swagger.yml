@@ -1,0 +1,86 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  verion: "1.0.0"
+  title: Swagger Rest Tutorial - realpython.com/flask-connexion-rest-api
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+paths:
+  /clients:
+    get:
+      operationId: clients.read_all
+      tags:
+        - Clients
+      summary: Read the entire set of clients, sorted by client name
+      description: Read the entire set of clients, sorted by client name
+      responses:
+        200:
+          description: Successfully read client set operation
+          schema:
+            type: array
+            items:
+              properties:
+                clientid:
+                  type: string
+                  description: ID of the client
+                client_name:
+                  type: string
+                  description: Name of the client
+    post:
+      operationId: clients.create
+      tags:
+        - Clients
+      summary: Create a client
+      description: Create a new client
+      parameters:
+        - name: client
+          in: body
+          description: Client to create
+          required: True
+          schema:
+            type: object
+            properties:
+              client_name:
+                type: string
+                description: Name of the client to create
+      responses:
+        201:
+          description: Successfully created client
+          schema:
+            properties:
+              clientid:
+                type: string
+                description: ID of the client
+              client_name:
+                type: string
+                description: Name of the client
+  /client/{clientid}:
+    get:
+      operationId: clients.read_one
+      tags:
+        - Clients
+      summary: Read one client
+      description: Read one client
+      parameters:
+        - name: clientid
+          in: path
+          description: ID of the client to get
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Successfully read client from clients data operation
+          schema:
+            type: object
+            properties:
+              clientid:
+                type: string
+                description: ID of the client
+              client_name:
+                type: string
+                description: Name of the client
