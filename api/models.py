@@ -1,6 +1,11 @@
 from datetime import datetime
 from api.config import db, ma
 
+""" ====== DATABASE ARCHITECTURE ====== """
+# ToDo: Table Item State columns (ACT, INA, DEL) to allow soft and hard delete of table values.
+# ToDo: Note Table, NoteID Field in Timelog to add notes, especially for projects that share activity code.
+# ToDo: Update client/project names to match new time system
+
 class User(db.Model):
     userid = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
