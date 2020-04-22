@@ -59,7 +59,7 @@ paths:
               client_name:
                 type: string
                 description: Name of the client
-  /client/{clientid}:
+  /clients/{clientid}:
     get:
       operationId: clients.read_one
       tags:
@@ -84,3 +84,299 @@ paths:
               client_name:
                 type: string
                 description: Name of the client
+  /projects:
+    get:
+      operationId: projects.read_all
+      tags:
+        - Clients
+      summary: Read the entire set of projects, sorted by project name
+      description: Read the entire set of projects, sorted by project name
+      responses:
+        200:
+          description: Successfully read project set operation
+          schema:
+            type: array
+            items:
+              properties:
+                projectid:
+                  type: string
+                  description: ID of the project
+                project_name:
+                  type: string
+                  description: Name of the project
+    post:
+      operationId: projects.create
+      tags:
+        - Clients
+      summary: Create a project
+      description: Create a new project
+      parameters:
+        - name: project
+          in: body
+          description: Client to create
+          required: True
+          schema:
+            type: object
+            properties:
+              project_name:
+                type: string
+                description: Name of the project to create
+      responses:
+        201:
+          description: Successfully created project
+          schema:
+            properties:
+              projectid:
+                type: string
+                description: ID of the project
+              project_name:
+                type: string
+                description: Name of the project
+  /projects/{projectid}:
+    get:
+      operationId: projects.read_one
+      tags:
+        - Clients
+      summary: Read one project
+      description: Read one project
+      parameters:
+        - name: projectid
+          in: path
+          description: ID of the project to get
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Successfully read project from projects data operation
+          schema:
+            type: object
+            properties:
+              projectid:
+                type: string
+                description: ID of the project
+              project_name:
+                type: string
+                description: Name of the project
+  /users:
+    get:
+      operationId: users.read_all
+      tags:
+        - Users
+      summary: Read the entire set of users, sorted by user name
+      description: Read the entire set of users, sorted by user name
+      responses:
+        200:
+          description: Successfully read user set operation
+          schema:
+            type: array
+            items:
+              properties:
+                userid:
+                  type: string
+                  description: ID of the user
+                user_name:
+                  type: string
+                  description: Name of the user
+                email:
+                  type: string
+                  description: Email address of the user
+    post:
+      operationId: users.create
+      tags:
+        - Users
+      summary: Create a user
+      description: Create a new user
+      parameters:
+        - name: user
+          in: body
+          description: User to create
+          required: True
+          schema:
+            type: object
+            properties:
+              user_name:
+                type: string
+                description: Name of the user to create
+              email:
+                type: string
+                description: Email address of the user to create
+              encoded_password:
+                type: string
+                description: Encoded password of the user to create
+      responses:
+        201:
+          description: Successfully created user
+          schema:
+            properties:
+              userid:
+                type: string
+                description: ID of the user
+              user_name:
+                type: string
+                description: Username of the user
+              email:
+                type: string
+                description: Email address of the user
+  /users/{userid}:
+    get:
+      operationId: users.read_one
+      tags:
+        - Users
+      summary: Read one user
+      description: Read one user
+      parameters:
+        - name: userid
+          in: path
+          description: ID of the user to get
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Successfully read user from users data operation
+          schema:
+            type: object
+            properties:
+              userid:
+                type: string
+                description: ID of the user
+              user_name:
+                type: string
+                description: Name of the user
+              email:
+                type: string
+                description: Email address of the user
+    put:
+      operationID: users.update
+      tags:
+          - Users
+      summary: Update a user
+      description: Update a user
+      parameters:
+        - name: userid
+          in: path
+          description: ID of the user to update
+          type: integer
+          required: True
+        - name: user
+          in: body
+          schema:
+            type: object
+            properties:
+              user_name:
+                type: string
+                description: Username for the user
+              email:
+                type: string
+                description: Email address for the user
+              encoded_password:
+                type: string
+                descprition: Encoded password for the user
+      responses:
+        200:
+          description: Successfully updated user
+          schema:
+            properties:
+              userid:
+                type: string
+                description: ID of the user
+              user_name:
+                type: string
+                description: Username of the user
+              email:
+                type: string
+                description: Email of the user
+    delete:
+      operationID: users.delete
+      tags:
+        - Users
+      summary: Delete a user
+      description: Delete a user from the user table
+      parameters:
+        - name: userid
+          in: path
+          type: integer
+          description: ID of the user to delete
+          required: True
+      responses:
+        200:
+          description: Successfully deleted a user
+
+  /timelog/{userid}/all:
+    get:
+      operationID: timelog.read_user_rows
+      tags:
+        - Timelog
+      summary: Get all Timelog rows for the userid
+      description: Get all Timelog rows for the userid
+      parameters:
+          - name: userid
+            in: path
+            type: integer
+            description: ID of a user with timelog rows
+            required: True
+      responses:
+        200:
+          description: Successfully queried timelog rows for the user
+          schema:
+            properties:
+              timelogid:
+                type: string
+                description: The ID of the timelog row
+              userid:
+                type: string
+                description: The ID of the user to which the rows belong
+              clientid:
+                type: string
+                description: The ID of the client assigned to the timelog row
+              projectid:
+                type: string
+                description: the ID of the project assigned to the timelog row
+              start:
+                type: string
+                description: the timestamp of when the user started timing for the row
+              stop:
+                type: string
+                description: the timestamp of when the user stopped timing for the row
+    post:
+      operationID: timelog.create_row
+      tags:
+        - Timelog
+      summary: Create a new timelog row
+      description: Create a new timelog row
+      parameters:
+        - name: timelog
+          in: body
+          description: Timelog row to create
+          required: True
+          schema:
+            type: object
+            properties:
+              userid:
+                type: string
+                description: ID of the user to which the timelog row is assigned
+              clientid:
+                type: string
+                description: ID of the client being tracked
+              projectid:
+                type: string
+                description: ID of the project being tracked
+              start:
+                type: string
+                description: Timestamp for the start of the current row timing
+      responses:
+        201:
+          description: successfully created timelog row
+        
+  /timelog/{userid}/current:
+    get:
+      operationID: timelog.read_user_current_row
+    put:
+      operationID: timelog.update_user_current_row
+  /timelog/{userid}/daterange:
+    get:
+      operationID: timelog.read_user_rows_daterange
+  /timelog/{timelogid}:
+    put:
+      operationID: timelog.update_row
+    
+
