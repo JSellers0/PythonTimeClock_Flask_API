@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   description: This is the swagger file that goes with our server code
-  verion: "1.0.0"
+  version: "1.0.0"
   title: Swagger Rest Tutorial - realpython.com/flask-connexion-rest-api
 consumes:
   - application/json
@@ -88,7 +88,7 @@ paths:
     get:
       operationId: projects.read_all
       tags:
-        - Clients
+        - Projects
       summary: Read the entire set of projects, sorted by project name
       description: Read the entire set of projects, sorted by project name
       responses:
@@ -107,7 +107,7 @@ paths:
     post:
       operationId: projects.create
       tags:
-        - Clients
+        - Projects
       summary: Create a project
       description: Create a new project
       parameters:
@@ -136,7 +136,7 @@ paths:
     get:
       operationId: projects.read_one
       tags:
-        - Clients
+        - Projects
       summary: Read one project
       description: Read one project
       parameters:
@@ -241,16 +241,16 @@ paths:
                 description: ID of the user
               user_name:
                 type: string
-                description: Name of the user
+                description: Username of the User
               email:
                 type: string
                 description: Email address of the user
     put:
-      operationID: users.update
+      operationId: users.update
       tags:
-          - Users
-      summary: Update a user
-      description: Update a user
+        - Users
+      summary: Update user
+      description: Update a user's information
       parameters:
         - name: userid
           in: path
@@ -264,119 +264,290 @@ paths:
             properties:
               user_name:
                 type: string
-                description: Username for the user
+                description: Username of the User
               email:
                 type: string
-                description: Email address for the user
+                description: Email address of the User
               encoded_password:
                 type: string
-                descprition: Encoded password for the user
+                description: User's encoded password
       responses:
         200:
           description: Successfully updated user
-          schema:
-            properties:
-              userid:
-                type: string
-                description: ID of the user
-              user_name:
-                type: string
-                description: Username of the user
-              email:
-                type: string
-                description: Email of the user
-    delete:
-      operationID: users.delete
+  /timelog/{userid}:
+    get:
+      operationId: timelog.read_user_rows
       tags:
-        - Users
-      summary: Delete a user
-      description: Delete a user from the user table
+        - Timelog
+      summary: Read Users Timelog
+      description: Returns all timelog rows for the User's ID
       parameters:
         - name: userid
           in: path
+          description: ID of a User with Timelog rows
           type: integer
-          description: ID of the user to delete
           required: True
       responses:
         200:
-          description: Successfully deleted a user
-
-  /timelog/{userid}/all:
-    get:
-      operationID: timelog.read_user_rows
-      tags:
-        - Timelog
-      summary: Get all Timelog rows for the userid
-      description: Get all Timelog rows for the userid
-      parameters:
-          - name: userid
-            in: path
-            type: integer
-            description: ID of a user with timelog rows
-            required: True
-      responses:
-        200:
-          description: Successfully queried timelog rows for the user
+          description: Successfully read timelog rows for user
           schema:
-            properties:
+            type: object
+            properties: 
               timelogid:
-                type: string
-                description: The ID of the timelog row
+                type: integer
+                description: ID of the timelog row
               userid:
                 type: string
-                description: The ID of the user to which the rows belong
+                description: ID of the user to which the rows belong
               clientid:
                 type: string
-                description: The ID of the client assigned to the timelog row
+                description: ID of the client tracked by the row
               projectid:
                 type: string
-                description: the ID of the project assigned to the timelog row
+                description: ID of the project tracked by the row
               start:
                 type: string
-                description: the timestamp of when the user started timing for the row
+                description: Timestamp of the start of timing the row
               stop:
                 type: string
-                description: the timestamp of when the user stopped timing for the row
+                description: Timestamp of the stop of timing the row or None if no stop time.
     post:
-      operationID: timelog.create_row
+      operationId: timelog.create
       tags:
         - Timelog
-      summary: Create a new timelog row
-      description: Create a new timelog row
+      summary: Create a Timelog row
+      description: Create a Timelog row for the UserID
       parameters:
+        - name: userid
+          in: path
+          description: ID of the User assigned to the Timelog Row
+          type: integer
+          required: True
         - name: timelog
           in: body
-          description: Timelog row to create
+          description: timelog row to create
           required: True
           schema:
             type: object
             properties:
               userid:
                 type: string
-                description: ID of the user to which the timelog row is assigned
+                description: ID of the user to which the rows belong
               clientid:
                 type: string
-                description: ID of the client being tracked
+                description: ID of the client tracked by the row
               projectid:
                 type: string
-                description: ID of the project being tracked
+                description: ID of the project tracked by the row
               start:
                 type: string
-                description: Timestamp for the start of the current row timing
+                description: Timestamp of the start of timing the row
+              stop:
+                type: string
+                description: Timestamp of the stop of timing the row or None if no stop time.
       responses:
         201:
-          description: successfully created timelog row
-        
+          description: Timelog row created successfully
+          schema:
+            properties:
+              userid:
+                type: string
+                description: ID of the user to which the rows belong
+              clientid:
+                type: string
+                description: ID of the client tracked by the row
+              projectid:
+                type: string
+                description: ID of the project tracked by the row
+              start:
+                type: string
+                description: Timestamp of the start of timing the row
+              stop:
+                type: string
+                description: Timestamp of the stop of timing the row or None if no stop time.
   /timelog/{userid}/current:
     get:
-      operationID: timelog.read_user_current_row
+      operationId: timelog.read_user_current_row
+      tags:
+        - Timelog
+      summary: Get current User row
+      description: Retrieve the most recent Timelog row for the User
+      parameters:
+        - name: userid
+          in: path
+          description: ID of User with a current Timelog row
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Successfully read User's current row
+          schema:
+            properties:
+              userid:
+                type: string
+                description: ID of the user to which the rows belong
+              clientid:
+                type: string
+                description: ID of the client tracked by the row
+              projectid:
+                type: string
+                description: ID of the project tracked by the row
+              start:
+                type: string
+                description: Timestamp of the start of timing the row
+              stop:
+                type: string
+                description: Timestamp of the stop of timing the row or None if no stop time.
     put:
-      operationID: timelog.update_user_current_row
+      operationId: timelog.update_user_current_row
+      tags:
+        - Timelog
+      summary: Update User current row
+      description: Update the current row for the User.  Intended to be a helper method to make stopping timing easier since you don't need to track timelogid
+      parameters:
+        - name: userid
+          in: path
+          description: ID of the User with a current timelog row to update
+          type: integer
+          required: True
+        - name: timelog
+          in: body
+          description: The timelog row data to apply as an update
+          schema:
+            type: object
+            properties:
+              userid:
+                type: string
+                description: ID of the user to which the rows belong
+              clientid:
+                type: string
+                description: ID of the client tracked by the row
+              projectid:
+                type: string
+                description: ID of the project tracked by the row
+              start:
+                type: string
+                description: Timestamp of the start of timing the row
+              stop:
+                type: string
+                description: Timestamp of the stop of timing the row or None if no stop time.
+      responses:
+        200:
+          description: User's Current Row Successfully Updated.
+          schema:
+            properties:
+              userid:
+                type: string
+                description: ID of the user to which the rows belong
+              clientid:
+                type: string
+                description: ID of the client tracked by the row
+              projectid:
+                type: string
+                description: ID of the project tracked by the row
+              start:
+                type: string
+                description: Timestamp of the start of timing the row
+              stop:
+                type: string
+                description: Timestamp of the stop of timing the row or None if no stop time.
   /timelog/{userid}/daterange:
     get:
-      operationID: timelog.read_user_rows_daterange
+      operationId: timelog.read_user_rows_daterange
+      tags:
+        - Timelog
+      summary: Get Date-bound User Rows
+      description: Get Timelog rows for a User between a range of dates
+      parameters:
+        - name: userid
+          in: path
+          description: ID of User with timelog rows
+          type: integer
+          required: True
+        - name: daterange
+          in: body
+          description: Range of dates for filter
+          schema:
+            type: object
+            properties:
+              range_start:
+                type: string
+                description: Starting date of time range to search
+              range_end:
+                type: string
+                description: Stopping date of time range to search
+      responses:
+        200:
+          description: Successfully read User rows between dates provided.
+          schema:
+            properties:
+              userid:
+                type: integer
+                description: ID of the user to which the rows belong
+              clientid:
+                type: integer
+                description: ID of the client tracked by the row
+              projectid:
+                type: integer
+                description: ID of the project tracked by the row
+              start:
+                type: string
+                description: Timestamp of the start of timing the row
+              stop:
+                type: string
+                description: Timestamp of the stop of timing the row or None if no stop time.
   /timelog/{timelogid}:
     put:
-      operationID: timelog.update_row
-    
-
+      operationId: timelog.update_row
+      tags:
+        - Timelog
+      summary: Update a timelog row
+      description: Update the data for the Timelog row at the ID provided
+      parameters:
+        - name: timelogid
+          in: path
+          description: ID of the timelog row to update
+          type: integer
+          required: True
+        - name: timelog
+          in: body
+          description: Timelog row data to apply as Update to the ID provided
+          required: True
+          schema:
+            type: object
+            properties:
+              userid:
+                type: string
+                description: ID of the user to which the rows belong
+              clientid:
+                type: string
+                description: ID of the client tracked by the row
+              projectid:
+                type: string
+                description: ID of the project tracked by the row
+              start:
+                type: string
+                description: Timestamp of the start of timing the row
+              stop:
+                type: string
+                description: Timestamp of the stop of timing the row or None if no stop time.
+      responses:
+        201:
+          description: Successfully updated Timelog row at ID provided.
+          schema:
+            properties:
+              userid:
+                type: string
+                description: ID of the user to which the rows belong
+              clientid:
+                type: string
+                description: ID of the client tracked by the row
+              projectid:
+                type: string
+                description: ID of the project tracked by the row
+              start:
+                type: string
+                description: Timestamp of the start of timing the row
+              stop:
+                type: string
+                description: Timestamp of the stop of timing the row or None if no stop time.

@@ -1,5 +1,5 @@
 from datetime import datetime
-from api.config import db, ma
+from config import db, ma
 
 """ ====== DATABASE ARCHITECTURE ====== """
 # ToDo: Table Item State columns (ACT, INA, DEL) to allow soft and hard delete of table values.
@@ -8,9 +8,9 @@ from api.config import db, ma
 
 class User(db.Model):
     userid = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), unique=True, nullable=False)
-    email = db.Column(String(120), uniuqe=True, nullable=False)
-    password = db.Column(String(60), nullable=False)
+    user_name = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    encoded_password = db.Column(db.String(60), nullable=False)
 
     def __repr__(self):
         return "User({}, {})".format(self.username, self.email)
@@ -54,5 +54,5 @@ class Timelog(db.Model):
 
 class TimelogSchema(ma.ModelSchema):
     class Meta:
-        model - Timelog
+        model = Timelog
         sqla_session = db.session

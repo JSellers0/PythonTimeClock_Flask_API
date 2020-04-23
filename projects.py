@@ -2,8 +2,8 @@
 This is the Project module and supports all REST actions for the project table
 """
 from flask import abort
-from api.models import Project, ProjectSchema
-from api.config import db
+from models import Project, ProjectSchema
+from config import db
 
 def read_all():
     projects = Project.query.order_by(Project.project_name).all()

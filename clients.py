@@ -2,8 +2,8 @@
 This is the client module and supports all REST actions for the client table
 """
 from flask import abort
-from api.models import Client, ClientSchema
-from api.config import db
+from models import Client, ClientSchema
+from config import db
 
 def read_all():
     clients = Client.query.order_by(Client.client_name).all()

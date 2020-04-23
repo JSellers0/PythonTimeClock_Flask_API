@@ -2,8 +2,8 @@
 This is the User module and supports all REST actions for the user table
 """
 from flask import abort, make_response
-from api.models import User, UserSchema
-from api.config import db
+from models import User, UserSchema
+from config import db
 
 def read_all():
     users = User.query.order_by(User.user_name).all()
@@ -18,6 +18,7 @@ def read_one(userid):
     if user is not None:
         user_schema = UserSchema()
         data = user_schema.dump(user)
+        return data, 200
     else:
         abort(
             404,
@@ -25,11 +26,11 @@ def read_one(userid):
         )
 
 def create(user):
-    username = user.get("username")
+    user_name = user.get("user_name")
     email = user.get("email")
 
     existing_user = (
-        User.query.filter(User.username == username)
+        User.query.filter(User.user_name == user_name)
         .filter(User.email == email)
         .one_or_none()
     )
@@ -48,19 +49,19 @@ def create(user):
     else:
         abort(
             409,
-            "User {username} at {email} already exists.".format(
-                username=username, email=email)
+            "User {user_name} at {email} already exists.".format(
+                user_name=user_name, email=email)
         )
 
 def update(userid, user):
-    update_user = User.query.filter(User.userid = userid).one_or_none()
+    update_user = User.query.filter(User.userid == userid).one_or_none()
 
-    username = user.get("username")
+    user_name = user.get("user_name")
     email = user.get("email")
 
     existing_user = (
-        User.query.filter(User.username = username)
-        .filter(User.email = email)
+        User.query.filter(User.user_name == user_name)
+        .filter(User.email == email)
         .one_or_none()
     )
 
@@ -72,8 +73,8 @@ def update(userid, user):
     elif existing_user is not None and existing_user.id != userid:
         abort(
             409,
-            "User {username} at {email} already exists".format(
-                username=username, email=email
+            "User {user_name} at {email} already exists".format(
+                user_name=user_name, email=email
             )
         )
     else:
@@ -90,7 +91,7 @@ def update(userid, user):
         return data, 200
 
 def delete(userid):
-    user = User.query.filter(User.userid = userid).one_or_none()
+    user = User.query.filter(User.userid == userid).one_or_none()
 
     if user is not None:
         db.session.delete(user)
