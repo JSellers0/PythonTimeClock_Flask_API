@@ -12,6 +12,8 @@ def read_all():
     data = client_schema.dump(clients)
     return data
 
+# ToDo: Add read_user: Client.join(user_client_exclude).all()
+
 def read_one(clientid):
     client = Client.query.filter(Client.clientid == clientid).one_or_none()
 

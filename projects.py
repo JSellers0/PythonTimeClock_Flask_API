@@ -12,6 +12,8 @@ def read_all():
     data = project_schema.dump(projects)
     return data
 
+# ToDo: Add read_user_all: Project.join(user_project_exclude).all()
+
 def read_one(projectid):
     project = Project.query.filter(Project.projectid == projectid).one_or_none()
 
