@@ -274,7 +274,7 @@ paths:
       responses:
         200:
           description: Successfully updated user
-  /timelog/{userid}:
+  /timelog/users/{userid}:
     get:
       operationId: timelog.read_user_rows
       tags:
@@ -365,7 +365,7 @@ paths:
               stop:
                 type: string
                 description: Timestamp of the stop of timing the row or None if no stop time.
-  /timelog/{userid}/current:
+  /timelog/users/{userid}/current:
     get:
       operationId: timelog.read_user_current_row
       tags:
@@ -451,7 +451,7 @@ paths:
               stop:
                 type: string
                 description: Timestamp of the stop of timing the row or None if no stop time.
-  /timelog/{userid}/daterange:
+  /timelog/users/{userid}/daterange:
     get:
       operationId: timelog.read_user_rows_daterange
       tags:
