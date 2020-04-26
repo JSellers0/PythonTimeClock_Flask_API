@@ -4,25 +4,41 @@ This is the User module and supports all REST actions for the user table
 from flask import abort, make_response
 from models import User, UserSchema
 from config import db
+from api import bcrypt
 
-def read_all():
-    users = User.query.order_by(User.user_name).all()
+def read_name(user):
+    user_name = user.get("user_name")
+    sub_password = user.get("password")
 
-    user_schema = UserSchema(many=True)
-    data = user_schema.dump(users)
-    return data
+    user = User.query.filter(User.user_name == user_name).one_or_none()
 
-def read_one(userid):
-    user = User.query.filter(User.userid == userid).one_or_none()
+    if user is not None and bcrypt.check_password_hash(user.encoded_password, sub_password):
+        user_schema = UserSchema(exclude=["encoded_password"])
+        data = user_schema.dump(user)
+        return data, 200
+    elif user is None:
+        abort(
+            404,
+            "User record not found for {}.".format(user_name)
+        )
+    else :
+        abort(
+            404,
+            "Incorrect password for {}.".format(user_name)
+        )
+
+def read_email(user):
+    email = user.get("email")
+    user = User.query.filter(User.email == email).one_or_none()
 
     if user is not None:
-        user_schema = UserSchema()
+        user_schema = UserSchema(exclude=["encoded_password"])
         data = user_schema.dump(user)
         return data, 200
     else:
         abort(
             404,
-            "User Record not found for {}".format(userid)
+            "User record not found for {}.".format(email)
         )
 
 def create(user):
