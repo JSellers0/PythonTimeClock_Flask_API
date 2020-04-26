@@ -230,7 +230,7 @@ paths:
         200:
           description: Successfully updated user
   /users/name:
-    get:
+    post:
       operationId: users.read_name
       tags:
         - Users
