@@ -247,9 +247,9 @@ paths:
               user_name:
                 type: string
                 description: Name of the user to search
-              encoded_password:
+              password:
                 type: string
-                description: Encoded password of the user to verify
+                description: User password submitted to application for verification
       responses:
         200:
           description: Successfully found user with Username
