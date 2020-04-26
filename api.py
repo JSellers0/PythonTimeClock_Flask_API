@@ -4,7 +4,7 @@ import config
 
 connex_app = config.connex_app
 bcrypt = Bcrypt
-bcrypt.init_app(connex_app)
+bcrypt.init_app(connex_app.app)
 
 connex_app.add_api("swagger.yml")
 
