@@ -43,6 +43,7 @@ def read_email(user):
 def create(user):
     user_name = user.get("user_name")
     email = user.get("email")
+    password = bc.generate_password_hash(user.get("encoded_password"))
 
     existing_user = (
         User.query.filter(User.user_name == user_name)
@@ -52,6 +53,11 @@ def create(user):
 
     if existing_user is None:
         schema = UserSchema()
+        new_user = {
+            "user_name": user_name,
+            "email": email,
+            "encoded_password": password
+        }
         new_user = schema.load(user, session=db.session)
 
         db.session.add(new_user)
