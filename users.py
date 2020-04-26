@@ -63,7 +63,9 @@ def create(user):
         db.session.add(new_user)
         db.session.commit()
 
-        data = schema.dump(new_user, exclude=["encoded_password"])
+        dump_schema = UserSchema(, exclude=["encoded_password"])
+
+        data = dump_schema.dump(new_user)
 
         return data, 201
 
