@@ -84,6 +84,7 @@ paths:
               client_name:
                 type: string
                 description: Name of the client
+
   /projects:
     get:
       operationId: projects.read_all
@@ -157,29 +158,8 @@ paths:
               project_name:
                 type: string
                 description: Name of the project
+
   /users:
-    get:
-      operationId: users.read_all
-      tags:
-        - Users
-      summary: Read the entire set of users, sorted by user name
-      description: Read the entire set of users, sorted by user name
-      responses:
-        200:
-          description: Successfully read user set operation
-          schema:
-            type: array
-            items:
-              properties:
-                userid:
-                  type: string
-                  description: ID of the user
-                user_name:
-                  type: string
-                  description: Name of the user
-                email:
-                  type: string
-                  description: Email address of the user
     post:
       operationId: users.create
       tags:
@@ -218,33 +198,6 @@ paths:
                 type: string
                 description: Email address of the user
   /users/{userid}:
-    get:
-      operationId: users.read_one
-      tags:
-        - Users
-      summary: Read one user
-      description: Read one user
-      parameters:
-        - name: userid
-          in: path
-          description: ID of the user to get
-          type: integer
-          required: True
-      responses:
-        200:
-          description: Successfully read user from users data operation
-          schema:
-            type: object
-            properties:
-              userid:
-                type: string
-                description: ID of the user
-              user_name:
-                type: string
-                description: Username of the User
-              email:
-                type: string
-                description: Email address of the user
     put:
       operationId: users.update
       tags:
@@ -259,21 +212,91 @@ paths:
           required: True
         - name: user
           in: body
+          description: user object with current or new data
+          required: True
           schema:
             type: object
             properties:
               user_name:
                 type: string
-                description: Username of the User
+                description: User's current or new username
               email:
                 type: string
-                description: Email address of the User
+                description: User's current or new email address
               encoded_password:
                 type: string
-                description: User's encoded password
+                description: User's new encoded password
       responses:
         200:
           description: Successfully updated user
+  /users/name:
+    get:
+      operationId: users.read_name
+      tags:
+        - Users
+      summary: Read one user by Username
+      description: Return a user that matches username and password submitted for verification
+      parameters:
+        - name: user
+          in: body
+          description: User object with user_name to query
+          required: True
+          schema:
+            type: object
+            properties:
+              user_name:
+                type: string
+                description: Username to query
+              password:
+                type: string
+                description: Password submitted by user for verification
+      responses:
+        200:
+          description: Successfully found user with email address
+          schema:
+            properties:
+              userid:
+                type: string
+                description: ID of the user
+              user_name:
+                type: string
+                description: Username of the user
+              email:
+                type: string
+                description: Email address of the user
+  /users/email:
+    get:
+      operationId: users.read_email
+      tags:
+        - Users
+      summary: Verify user email for password recovery
+      description: Submit an email address to initiate password recovery procedure.
+      parameters:
+        - name: user
+          in: body
+          description: User object with email address to query
+          required: True
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                description: Email address to query
+      responses:
+        200:
+          description: Successfully found user with email address
+          schema:
+            properties:
+              userid:
+                type: string
+                description: ID of the user
+              user_name:
+                type: string
+                description: Username of the user
+              email:
+                type: string
+                description: Email address of the user
+
   /timelog/users/{userid}:
     get:
       operationId: timelog.read_user_rows
