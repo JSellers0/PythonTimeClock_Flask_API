@@ -63,7 +63,7 @@ def create(user):
         db.session.add(new_user)
         db.session.commit()
 
-        data = schema.dump(new_user)
+        data = schema.dump(new_user, exclude=["encoded_password"])
 
         return data, 201
 
@@ -104,7 +104,7 @@ def update(userid, user):
 
         update.userid = update_user.userid
 
-        db.session.merge(updat)
+        db.session.merge(update)
         db.session.commit()
 
         data = schema.dump(update_user)
