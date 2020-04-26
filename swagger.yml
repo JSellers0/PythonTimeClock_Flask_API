@@ -239,20 +239,20 @@ paths:
       parameters:
         - name: user
           in: body
-          description: User object with user_name to query
+          description: User to search
           required: True
           schema:
             type: object
             properties:
               user_name:
                 type: string
-                description: Username to query
-              password:
+                description: Name of the user to search
+              encoded_password:
                 type: string
-                description: Password submitted by user for verification
+                description: Encoded password of the user to verify
       responses:
         200:
-          description: Successfully found user with email address
+          description: Successfully found user with Username
           schema:
             properties:
               userid:
