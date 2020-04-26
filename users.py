@@ -3,8 +3,7 @@ This is the User module and supports all REST actions for the user table
 """
 from flask import abort, make_response
 from models import User, UserSchema
-from config import db
-from api import bcrypt
+from config import db, bc
 
 def read_name(user):
     user_name = user.get("user_name")
@@ -12,7 +11,7 @@ def read_name(user):
 
     user = User.query.filter(User.user_name == user_name).one_or_none()
 
-    if user is not None and bcrypt.check_password_hash(user.encoded_password, sub_password):
+    if user is not None and bc.check_password_hash(user.encoded_password, sub_password):
         user_schema = UserSchema(exclude=["encoded_password"])
         data = user_schema.dump(user)
         return data, 200
