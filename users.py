@@ -43,6 +43,12 @@ def read_email(user):
 def create(user):
     user_name = user.get("user_name")
     email = user.get("email")
+    # ToDo: Better handling of passwords between clients and server.
+    """   
+    Won't recognize hashes from applications.  Need to look into Authentication requests
+    as intermediary improvement.  HTTPS + Authentication would be ultimate goal.
+    """
+    password = bc.generate_hashed_password(user.get("encoded_password")).decode("utf-8")
 
     existing_user = (
         User.query.filter(User.user_name == user_name)
@@ -52,7 +58,12 @@ def create(user):
 
     if existing_user is None:
         schema = UserSchema()
-        new_user = schema.load(user, session=db.session)
+        new_user = {
+            "user_name": user_name,
+            "email": email,
+            "encoded_password": password
+        }
+        new_user = schema.load(new_user, session=db.session)
 
         db.session.add(new_user)
         db.session.commit()
