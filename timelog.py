@@ -18,17 +18,25 @@ def read_user_rows(userid):
         data = timelog_schema.dump(timelogs)
         return data, 200
 
-def create(userid, timelog_row):
-    start = timelog_row.get("start")
-    stop = timelog_row.get("stop")
-    
-    existing_timelog = (
-        Timelog.query
-        .filter(Timelog.userid == userid)
-        .filter(Timelog.start == start)
-        .filter(Timelog.stop == stop)
-        .one_or_none()
-    )
+def create(userid, timelog):
+    start = timelog.get("start")
+    stop = timelog.get("stop")
+
+    if stop == None:
+        existing_timelog = (
+            Timelog.query
+            .filter(Timelog.userid == userid)
+            .filter(Timelog.start == start)
+            .one_or_none()
+        )
+    else:
+        existing_timelog = (
+            Timelog.query
+            .filter(Timelog.userid == userid)
+            .filter(Timelog.start == start)
+            .filter(Timelog.stop == stop)
+            .one_or_none()
+        )
 
     if existing_timelog is None:
         schema = TimelogSchema()

@@ -373,6 +373,9 @@ paths:
           description: Timelog row created successfully
           schema:
             properties:
+              timelogid:
+                type: string
+                description: ID of the timelog row created
               userid:
                 type: string
                 description: ID of the user to which the rows belong
