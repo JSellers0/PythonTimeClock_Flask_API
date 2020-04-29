@@ -52,6 +52,16 @@ class Timelog(db.Model):
     clientid = db.Column(db.Integer, db.ForeignKey("client.clientid"), nullable=False)
     projectid = db.Column(db.Integer, db.ForeignKey("project.projectid"), nullable=False)
 
+    def to_json(self):
+        return {
+            "timelogid": self.timelogid,
+            "userid": self.userid,
+            "clientid": self.clientid,
+            "projectid": self.projectid,
+            "start": self.start,
+            "stop": self.stop
+        }
+
 class TimelogSchema(ma.ModelSchema):
     class Meta:
         model = Timelog

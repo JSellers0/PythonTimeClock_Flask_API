@@ -1,6 +1,7 @@
 """
 This is the Timelog module and supports all REST actions for the timelog table
 """
+from datetime import datetime as dt
 from flask import abort
 from models import Timelog, TimelogSchema
 from config import db
@@ -19,12 +20,10 @@ def read_user_rows(userid):
         return data, 200
 
 def create(userid, timelog):
-    start = timelog.get("start")
+    start = dt.strptime(timelog.get("start"), "%Y-%m-%d %H:%M:%S")
     stop = timelog.get("stop")
 
-    abort(200, "Debugging")
-
-    if stop == None:
+    if stop == "na":
         existing_timelog = (
             Timelog.query
             .filter(Timelog.userid == userid)
@@ -32,6 +31,7 @@ def create(userid, timelog):
             .one_or_none()
         )
     else:
+        stop = dt.strptime(timelog.get("stop"), "%Y-%m-%d %H:%M:%S")
         existing_timelog = (
             Timelog.query
             .filter(Timelog.userid == userid)
@@ -39,17 +39,28 @@ def create(userid, timelog):
             .filter(Timelog.stop == stop)
             .one_or_none()
         )
-
+        
     if existing_timelog is None:
-        schema = TimelogSchema()
-        new_timelog = schema.load(timelog, session=db.session)
+        if stop == "na":
+            new_timelog = Timelog(
+                userid=timelog.get("userid"),
+                clientid=timelog.get("clientid"),
+                projectid=timelog.get("projectid"),
+                start=start
+            )
+        else:
+            new_timelog = Timelog(
+                userid=timelog.get("userid"),
+                clientid=timelog.get("clientid"),
+                projectid=timelog.get("projectid"),
+                start=start,
+                stop=stop
+            )
 
         db.session.add(new_timelog)
         db.session.commit()
 
-        data = schema.dump(new_timelog)
-
-        return data, 201
+        return new_timelog.to_json(), 201
 
     else:
         abort(
