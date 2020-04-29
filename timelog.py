@@ -22,6 +22,8 @@ def create(userid, timelog):
     start = timelog.get("start")
     stop = timelog.get("stop")
 
+    abort(200, "Debugging")
+
     if stop == None:
         existing_timelog = (
             Timelog.query
