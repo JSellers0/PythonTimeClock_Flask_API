@@ -160,7 +160,7 @@ def update_row(timelogid, timelog):
         return data, 200
 
 def read_row_detail(timelogid):
-    timelog = Timelog.query()\
+    timelog = Timelog.query\
         .join(Client, Timelog.clientid == Client.clientid)\
         .join(Project, Timelog.projectid == Project.projectid)\
         .filter(Timelog.timelogid == timelogid)\
