@@ -160,11 +160,7 @@ def update_row(timelogid, timelog):
         return data, 200
 
 def read_row_detail(timelogid):
-    timelog = Timelog.query\
-        .join(Client, Timelog.clientid == Client.clientid)\
-        .join(Project, Timelog.projectid == Project.projectid)\
-        .filter(Timelog.timelogid == timelogid)\
-        .one_or_none()
+    timelog = Timelog.query.filter(Timelog.timelogid == timelogid).one_or_none()
     
     if timelog is None:
         abort(
@@ -172,9 +168,16 @@ def read_row_detail(timelogid):
             "No row found for {}".format(timelogid)
         )
     else:
-        timelog_schema = TimelogSchema()
-        data = timelog_schema.dump(timelog)
-        return data, 200
+        client = Client.query.filter(Client.clientid == timelog.clientid).one_or_none()
+        project = Project.query.filter(Project.projectid == timelog.projectid).one_or_none()
+        timelog_dump = {
+            "timelogid": str(timelog.timelogid),
+            "userid": str(timelog.userid),
+            "client_name": client.client_name,
+            "project_name": project.project_name,
+            "start": timelog.start.strftime("%Y-%m-%d %H:%M:%S")
+        }
+        return timelog_dump, 200
 
 
 
