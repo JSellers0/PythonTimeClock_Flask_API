@@ -173,7 +173,9 @@ def read_row_detail(timelogid):
         timelog_dump = {
             "timelogid": str(timelog.timelogid),
             "userid": str(timelog.userid),
+            "clientid": str(timelog.clientid),
             "client_name": client.client_name,
+            "projectid": str(timelog.projectid),
             "project_name": project.project_name,
             "start": timelog.start.strftime("%Y-%m-%d %H:%M:%S")
         }
