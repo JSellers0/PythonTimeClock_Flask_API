@@ -524,7 +524,7 @@ paths:
                 description: Timestamp of the stop of timing the row or None if no stop time.
   /timelog/{timelogid}:
     get:
-      operationID: timelog.read_row_detail
+      operationId: timelog.read_row_detail
       tags:
         - Timelog
       summary: Read timelog row with details
