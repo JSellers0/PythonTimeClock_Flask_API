@@ -549,7 +549,10 @@ paths:
                 description: Name of project assigned to timelog row
               start:
                 type: string
-                description: UTC Timestamp when row timing started
+                description: UTC timestamp when row timing started
+              timelogid:
+                type: string
+                descriptioin: ID of the Timelog row
               userd:
                 type: string
                 description: ID of the user assigned to the row
