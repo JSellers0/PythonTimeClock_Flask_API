@@ -537,6 +537,11 @@ paths:
       responses:
         201:
           description: Successfully read timelog row
+          schema:
+            properties:
+              userid:
+                type: string
+                description: ID of the user to which the row belongs.
     put:
       operationId: timelog.update_row
       tags:
