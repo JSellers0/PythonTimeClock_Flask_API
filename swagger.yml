@@ -541,24 +541,18 @@ paths:
           schema:
             type: object
             properties: 
-              timelogid:
-                type: integer
-                description: ID of the timelog row
-              userid:
+              client_name:
                 type: string
-                description: ID of the user to which the rows belong
-              clientid:
+                description: Name of client assigned to timelog row
+              project_name:
                 type: string
-                description: ID of the client tracked by the row
-              projectid:
-                type: string
-                description: ID of the project tracked by the row
+                description: Name of project assigned to timelog row
               start:
                 type: string
-                description: Timestamp of the start of timing the row
-              stop:
+                description: UTC Timestamp when row timing started
+              userd:
                 type: string
-                description: Timestamp of the stop of timing the row or None if no stop time.
+                description: ID of the user assigned to the row
     put:
       operationId: timelog.update_row
       tags:
