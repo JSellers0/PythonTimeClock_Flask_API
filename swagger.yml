@@ -530,10 +530,10 @@ paths:
       summary: Read timelog row with details
       description: Read a timelog row at a given timelogid and return client and project names with timelog row data.
       parameters:
-          - name: timelogid
-            in: path
-            description: ID of the timelog row to read
-            required: True
+        - name: timelogid
+          in: path
+          description: ID of the timelog row to read
+          required: True
       responses:
         201:
           description: Successfully read timelog row
