@@ -523,6 +523,20 @@ paths:
                 type: string
                 description: Timestamp of the stop of timing the row or None if no stop time.
   /timelog/{timelogid}:
+    get:
+      operationID: timelog.read_row_detail
+      tags:
+        - Timelog
+      summary: Read timelog row with details
+      description: Read a timelog row at a given timelogid and return client and project names with timelog row data.
+      parameters:
+          - name: timelogid
+            in: path
+            description: ID of the timelog row to read
+            required: True
+      responses:
+        201:
+          description: Successfully read timelog row
     put:
       operationId: timelog.update_row
       tags:

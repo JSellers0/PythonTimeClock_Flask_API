@@ -3,7 +3,7 @@ This is the Timelog module and supports all REST actions for the timelog table
 """
 from datetime import datetime as dt
 from flask import abort
-from models import Timelog, TimelogSchema
+from models import Timelog, TimelogSchema, Client, Project
 from config import db
 
 def read_user_rows(userid):
@@ -80,7 +80,7 @@ def read_user_current_row(userid):
 
     if timelog is not None:
         timelog_schema = TimelogSchema()
-        data = timelog_schema.dump(timelogs)
+        data = timelog_schema.dump(timelog)
         return data, 200
     else:
         abort(
@@ -158,6 +158,25 @@ def update_row(timelogid, timelog):
         data = schema.dump(update_timelog)
 
         return data, 200
+
+def read_row_detail(timelogid):
+    timelog = Timelog.query()\
+        .join(Client, Timelog.clientid == Client.clientid)\
+        .join(Project, Timelog.projectid == Project.projectid)\
+        .filter(Timelog.timelogid == timelogid)\
+        .one_or_none()
+    
+    if timelog is None:
+        abort(
+            404,
+            "No row found for {}".format(timelogid)
+        )
+    else:
+        timelog_schema = TimelogSchema()
+        data = timelog_schema.dump(timelog)
+        return data, 200
+
+
 
 
 
