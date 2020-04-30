@@ -524,24 +524,41 @@ paths:
                 description: Timestamp of the stop of timing the row or None if no stop time.
   /timelog/{timelogid}:
     get:
-      operationId: timelog.read_row_detail
+      operationId: timelog.read_row_detail(
       tags:
         - Timelog
-      summary: Read timelog row with details
-      description: Read a timelog row at a given timelogid and return client and project names with timelog row data.
+      summary: Read Timelog row with Detail
+      description: Read a Timelog row with client and project names
       parameters:
         - name: timelogid
           in: path
-          description: ID of the timelog row to read
+          description: ID of a Timelog row
+          type: integer
           required: True
       responses:
-        201:
+        200:
           description: Successfully read timelog row
           schema:
-            properties:
+            type: object
+            properties: 
+              timelogid:
+                type: integer
+                description: ID of the timelog row
               userid:
                 type: string
-                description: ID of the user to which the row belongs.
+                description: ID of the user to which the rows belong
+              clientid:
+                type: string
+                description: ID of the client tracked by the row
+              projectid:
+                type: string
+                description: ID of the project tracked by the row
+              start:
+                type: string
+                description: Timestamp of the start of timing the row
+              stop:
+                type: string
+                description: Timestamp of the stop of timing the row or None if no stop time.
     put:
       operationId: timelog.update_row
       tags:
