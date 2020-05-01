@@ -1,6 +1,6 @@
 import os
 from config import db, bc
-from models import User, Client, Project, Timelog
+from models import User, Project, Task, Note, Timelog
 
 if os.path.exists("timeclock.sqlite"):
     os.remove("timeclock.sqlite")
@@ -18,11 +18,14 @@ user = User(
     encoded_password=bc.generate_password_hash("user1").decode("utf-8")
 )
 
-client = Client(client_name="Test Client")
+project = Project(project_name="General Overhead")
 
-project = Project(project_name="Test Project")
+task = Task(task_name="Admin")
+
+note = Note(note_name="Work Order Training")
 
 db.session.add(user)
-db.session.add(client)
 db.session.add(project)
+db.session.add(task)
+db.session.add(note)
 db.session.commit()
