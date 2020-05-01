@@ -465,6 +465,9 @@ paths:
               projectid:
                 type: string
                 description: ID of the project tracked by the row
+              noteid:
+                type: string
+                description: ID of the note tracked by the row
               start:
                 type: string
                 description: Timestamp of the start of timing the row
