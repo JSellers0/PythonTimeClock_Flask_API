@@ -11,80 +11,6 @@ produces:
 basePath: /api
 
 paths:
-  /clients:
-    get:
-      operationId: clients.read_all
-      tags:
-        - Clients
-      summary: Read the entire set of clients, sorted by client name
-      description: Read the entire set of clients, sorted by client name
-      responses:
-        200:
-          description: Successfully read client set operation
-          schema:
-            type: array
-            items:
-              properties:
-                clientid:
-                  type: string
-                  description: ID of the client
-                client_name:
-                  type: string
-                  description: Name of the client
-    post:
-      operationId: clients.create
-      tags:
-        - Clients
-      summary: Create a client
-      description: Create a new client
-      parameters:
-        - name: client
-          in: body
-          description: Client to create
-          required: True
-          schema:
-            type: object
-            properties:
-              client_name:
-                type: string
-                description: Name of the client to create
-      responses:
-        201:
-          description: Successfully created client
-          schema:
-            properties:
-              clientid:
-                type: string
-                description: ID of the client
-              client_name:
-                type: string
-                description: Name of the client
-  /clients/{clientid}:
-    get:
-      operationId: clients.read_one
-      tags:
-        - Clients
-      summary: Read one client
-      description: Read one client
-      parameters:
-        - name: clientid
-          in: path
-          description: ID of the client to get
-          type: integer
-          required: True
-      responses:
-        200:
-          description: Successfully read client from clients data operation
-          schema:
-            type: object
-            properties:
-              clientid:
-                type: string
-                description: ID of the client
-              client_name:
-                type: string
-                description: Name of the client
-
   /projects:
     get:
       operationId: projects.read_all
@@ -158,6 +84,154 @@ paths:
               project_name:
                 type: string
                 description: Name of the project
+
+  /tasks:
+    get:
+      operationId: tasks.read_all
+      tags:
+        - Clients
+      summary: Read the entire set of tasks, sorted by task name
+      description: Read the entire set of tasks, sorted by task name
+      responses:
+        200:
+          description: Successfully read task set operation
+          schema:
+            type: array
+            items:
+              properties:
+                taskid:
+                  type: string
+                  description: ID of the task
+                task_name:
+                  type: string
+                  description: Name of the task
+    post:
+      operationId: tasks.create
+      tags:
+        - Clients
+      summary: Create a task
+      description: Create a new task
+      parameters:
+        - name: task
+          in: body
+          description: Client to create
+          required: True
+          schema:
+            type: object
+            properties:
+              task_name:
+                type: string
+                description: Name of the task to create
+      responses:
+        201:
+          description: Successfully created task
+          schema:
+            properties:
+              taskid:
+                type: string
+                description: ID of the task
+              task_name:
+                type: string
+                description: Name of the task
+  /tasks/{taskid}:
+    get:
+      operationId: tasks.read_one
+      tags:
+        - Clients
+      summary: Read one task
+      description: Read one task
+      parameters:
+        - name: taskid
+          in: path
+          description: ID of the task to get
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Successfully read task from tasks data operation
+          schema:
+            type: object
+            properties:
+              taskid:
+                type: string
+                description: ID of the task
+              task_name:
+                type: string
+                description: Name of the task
+
+  /notes:
+    get:
+      operationId: notes.read_all
+      tags:
+        - Clients
+      summary: Read the entire set of notes, sorted by note name
+      description: Read the entire set of notes, sorted by note name
+      responses:
+        200:
+          description: Successfully read note set operation
+          schema:
+            type: array
+            items:
+              properties:
+                noteid:
+                  type: string
+                  description: ID of the note
+                note_name:
+                  type: string
+                  description: Name of the note
+    post:
+      operationId: notes.create
+      tags:
+        - Clients
+      summary: Create a note
+      description: Create a new note
+      parameters:
+        - name: note
+          in: body
+          description: Client to create
+          required: True
+          schema:
+            type: object
+            properties:
+              note_name:
+                type: string
+                description: Name of the note to create
+      responses:
+        201:
+          description: Successfully created note
+          schema:
+            properties:
+              noteid:
+                type: string
+                description: ID of the note
+              note_name:
+                type: string
+                description: Name of the note
+  /notes/{noteid}:
+    get:
+      operationId: notes.read_one
+      tags:
+        - Clients
+      summary: Read one note
+      description: Read one note
+      parameters:
+        - name: noteid
+          in: path
+          description: ID of the note to get
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Successfully read note from notes data operation
+          schema:
+            type: object
+            properties:
+              noteid:
+                type: string
+                description: ID of the note
+              note_name:
+                type: string
+                description: Name of the note
 
   /users:
     post:
@@ -297,7 +371,7 @@ paths:
                 type: string
                 description: Email address of the user
 
-  /timelog/users/{userid}:
+  /timelog:
     get:
       operationId: timelog.read_user_rows
       tags:
@@ -306,10 +380,15 @@ paths:
       description: Returns all timelog rows for the User's ID
       parameters:
         - name: userid
-          in: path
+          in: body
           description: ID of a User with Timelog rows
-          type: integer
           required: True
+          schema:
+            type: object
+            properties:
+              userid:
+                type: string
+                description: ID of the User to search
       responses:
         200:
           description: Successfully read timelog rows for user
@@ -322,12 +401,15 @@ paths:
               userid:
                 type: string
                 description: ID of the user to which the rows belong
-              clientid:
-                type: string
-                description: ID of the client tracked by the row
               projectid:
                 type: string
                 description: ID of the project tracked by the row
+              taskid:
+                type: string
+                description: ID of the task tracked by the row
+              noteid:
+                type: string
+                description: ID of the note traked by the row
               start:
                 type: string
                 description: Timestamp of the start of timing the row
@@ -341,11 +423,6 @@ paths:
       summary: Create a Timelog row
       description: Create a Timelog row for the UserID
       parameters:
-        - name: userid
-          in: path
-          description: ID of the User assigned to the Timelog Row
-          type: integer
-          required: True
         - name: timelog
           in: body
           description: timelog row to create
@@ -356,12 +433,15 @@ paths:
               userid:
                 type: string
                 description: ID of the user to which the rows belong
-              clientid:
+              taskid:
                 type: string
-                description: ID of the client tracked by the row
+                description: ID of the task tracked by the row
               projectid:
                 type: string
                 description: ID of the project tracked by the row
+              noteid:
+                type: string
+                description: ID of the note tracked by the row
               start:
                 type: string
                 description: Timestamp of the start of timing the row
@@ -379,9 +459,9 @@ paths:
               userid:
                 type: string
                 description: ID of the user to which the rows belong
-              clientid:
+              taskid:
                 type: string
-                description: ID of the client tracked by the row
+                description: ID of the task tracked by the row
               projectid:
                 type: string
                 description: ID of the project tracked by the row
@@ -391,117 +471,29 @@ paths:
               stop:
                 type: string
                 description: Timestamp of the stop of timing the row or None if no stop time.
-  /timelog/users/{userid}/current:
+  /timelog/daterange:
     get:
-      operationId: timelog.read_user_current_row
-      tags:
-        - Timelog
-      summary: Get current User row
-      description: Retrieve the most recent Timelog row for the User
-      parameters:
-        - name: userid
-          in: path
-          description: ID of User with a current Timelog row
-          type: integer
-          required: True
-      responses:
-        200:
-          description: Successfully read User's current row
-          schema:
-            properties:
-              userid:
-                type: string
-                description: ID of the user to which the rows belong
-              clientid:
-                type: string
-                description: ID of the client tracked by the row
-              projectid:
-                type: string
-                description: ID of the project tracked by the row
-              start:
-                type: string
-                description: Timestamp of the start of timing the row
-              stop:
-                type: string
-                description: Timestamp of the stop of timing the row or None if no stop time.
-    put:
-      operationId: timelog.update_user_current_row
-      tags:
-        - Timelog
-      summary: Update User current row
-      description: Update the current row for the User.  Intended to be a helper method to make stopping timing easier since you don't need to track timelogid
-      parameters:
-        - name: userid
-          in: path
-          description: ID of the User with a current timelog row to update
-          type: integer
-          required: True
-        - name: timelog
-          in: body
-          description: The timelog row data to apply as an update
-          schema:
-            type: object
-            properties:
-              userid:
-                type: string
-                description: ID of the user to which the rows belong
-              clientid:
-                type: string
-                description: ID of the client tracked by the row
-              projectid:
-                type: string
-                description: ID of the project tracked by the row
-              start:
-                type: string
-                description: Timestamp of the start of timing the row
-              stop:
-                type: string
-                description: Timestamp of the stop of timing the row or None if no stop time.
-      responses:
-        200:
-          description: User's Current Row Successfully Updated.
-          schema:
-            properties:
-              userid:
-                type: string
-                description: ID of the user to which the rows belong
-              clientid:
-                type: string
-                description: ID of the client tracked by the row
-              projectid:
-                type: string
-                description: ID of the project tracked by the row
-              start:
-                type: string
-                description: Timestamp of the start of timing the row
-              stop:
-                type: string
-                description: Timestamp of the stop of timing the row or None if no stop time.
-  /timelog/users/{userid}/daterange:
-    get:
-      operationId: timelog.read_user_rows_daterange
+      operationId: timelog.read_daterange
       tags:
         - Timelog
       summary: Get Date-bound User Rows
       description: Get Timelog rows for a User between a range of dates
       parameters:
-        - name: userid
-          in: path
-          description: ID of User with timelog rows
+        - in: query
+          name: userid
           type: integer
+          description: ID of the user to search
           required: True
-        - name: daterange
-          in: body
-          description: Range of dates for filter
-          schema:
-            type: object
-            properties:
-              range_start:
-                type: string
-                description: Starting date of time range to search
-              range_end:
-                type: string
-                description: Stopping date of time range to search
+        - in: query
+          name: range_begin
+          type: string
+          description: Beginning of the range of dates to search
+          required: True
+        - in: query
+          name: range_end
+          type: string
+          description: End of the range of dates to search
+          required: True
       responses:
         200:
           description: Successfully read User rows between dates provided.
@@ -510,9 +502,9 @@ paths:
               userid:
                 type: integer
                 description: ID of the user to which the rows belong
-              clientid:
+              taskid:
                 type: integer
-                description: ID of the client tracked by the row
+                description: ID of the task tracked by the row
               projectid:
                 type: integer
                 description: ID of the project tracked by the row
@@ -528,7 +520,7 @@ paths:
       tags:
         - Timelog
       summary: Read Timelog row with Detail
-      description: Read a Timelog row with client and project names
+      description: Read a Timelog row with task and project names
       parameters:
         - name: timelogid
           in: path
@@ -541,9 +533,9 @@ paths:
           schema:
             type: object
             properties: 
-              client_name:
+              task_name:
                 type: string
-                description: Name of client assigned to timelog row
+                description: Name of task assigned to timelog row
               project_name:
                 type: string
                 description: Name of project assigned to timelog row
@@ -552,8 +544,8 @@ paths:
                 description: UTC timestamp when row timing started
               timelogid:
                 type: string
-                descriptioin: ID of the Timelog row
-              userd:
+                description: ID of the Timelog row
+              userid:
                 type: string
                 description: ID of the user assigned to the row
     put:
@@ -578,9 +570,9 @@ paths:
               userid:
                 type: string
                 description: ID of the user to which the rows belong
-              clientid:
+              taskid:
                 type: string
-                description: ID of the client tracked by the row
+                description: ID of the task tracked by the row
               projectid:
                 type: string
                 description: ID of the project tracked by the row
@@ -598,9 +590,9 @@ paths:
               userid:
                 type: string
                 description: ID of the user to which the rows belong
-              clientid:
+              taskid:
                 type: string
-                description: ID of the client tracked by the row
+                description: ID of the task tracked by the row
               projectid:
                 type: string
                 description: ID of the project tracked by the row
