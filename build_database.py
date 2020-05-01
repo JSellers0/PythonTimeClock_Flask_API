@@ -1,4 +1,5 @@
 import os
+import socket
 from config import db, bc
 from models import User, Project, Task, Note, Timelog
 
@@ -7,9 +8,10 @@ if os.path.exists("timeclock.sqlite"):
 
 db.create_all()
 
-os.chown("timeclock.sqlite", 48, 48)
+if "MacBook" not in socket.gethostname():
+    os.chown("timeclock.sqlite", 48, 48)
 
-os.chmod("timeclock.sqlite", 0o664)
+    os.chmod("timeclock.sqlite", 0o664)
 
 # Add some test data
 user = User(
