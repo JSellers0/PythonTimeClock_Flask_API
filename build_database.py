@@ -33,8 +33,8 @@ timelog = Timelog(
     projectid=1,
     taskid=1,
     noteid=1,
-    start="2020-04-29 12:00:00",
-    stop="2020-04-29 13:00:00"
+    start=dt.strptime("2020-04-29 12:00:00", "%Y-%m-%d %H:%M:%S"),
+    stop=dt.strptime("2020-04-29 13:00:00", "%Y-%m-%d %H:%M:%S")
 )
 
 db.session.add(user)
@@ -49,8 +49,8 @@ timelog = Timelog(
     projectid=1,
     taskid=1,
     noteid=1,
-    start="2020-04-30 12:00:00",
-    stop="2020-04-30 13:00:00"
+    start=dt.strptime("2020-04-30 12:00:00", "%Y-%m-%d %H:%M:%S"),
+    stop=dt.strptime("2020-04-30 13:00:00", "%Y-%m-%d %H:%M:%S")
 )
 
 db.session.add(timelog)
