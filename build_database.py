@@ -22,11 +22,11 @@ user = User(
     encoded_password=bc.generate_password_hash("user1").decode("utf-8")
 )
 
-project = Project(project_name="General Overhead")
+project = Project(project_name="general overhead")
 
-task = Task(task_name="Admin")
+task = Task(task_name="admin")
 
-note = Note(note_name="Work Order Training")
+note = Note(note_name="work order training")
 
 timelog = Timelog(
     userid=1,
