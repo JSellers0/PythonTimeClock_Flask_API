@@ -48,15 +48,17 @@ def create(timelog):
         if stop == "na":
             new_timelog = Timelog(
                 userid=timelog.get("userid"),
-                taskid=timelog.get("taskid"),
                 projectid=timelog.get("projectid"),
+                taskid=timelog.get("taskid"),
+                noteid=timelog.get("noteid"),
                 start=start
             )
         else:
             new_timelog = Timelog(
                 userid=timelog.get("userid"),
-                taskid=timelog.get("taskid"),
                 projectid=timelog.get("projectid"),
+                taskid=timelog.get("taskid"),
+                noteid=timelog.get("noteid"),
                 start=start,
                 stop=stop
             )
