@@ -3,6 +3,8 @@ import socket
 from config import db, bc
 from models import User, Project, Task, Note, Timelog
 
+from datetime import datetime as dt
+
 if os.path.exists("timeclock.sqlite"):
     os.remove("timeclock.sqlite")
 
@@ -26,8 +28,30 @@ task = Task(task_name="Admin")
 
 note = Note(note_name="Work Order Training")
 
+timelog = Timelog(
+    userid=1,
+    projectid=1,
+    taskid=1,
+    noteid=1,
+    start="2020-04-29 12:00:00",
+    stop="2020-04-29 13:00:00"
+)
+
 db.session.add(user)
 db.session.add(project)
 db.session.add(task)
 db.session.add(note)
+db.session.add(timelog)
+db.session.commit()
+
+timelog = Timelog(
+    userid=1,
+    projectid=1,
+    taskid=1,
+    noteid=1,
+    start="2020-04-30 12:00:00",
+    stop="2020-04-30 13:00:00"
+)
+
+db.session.add(timelog)
 db.session.commit()
