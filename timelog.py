@@ -78,6 +78,7 @@ def create(timelog):
         )
 
 def update_row(timelogid, timelog):
+    # ToDo: Add UserID check to make sure users can't change each other's timelog rows.
     update_timelog = Timelog.query.filter(Timelog.timelogid == timelogid).one_or_none()
 
     if update_timelog is None:
