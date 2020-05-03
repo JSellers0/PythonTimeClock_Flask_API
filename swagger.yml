@@ -591,20 +591,3 @@ paths:
       responses:
         201:
           description: Successfully updated Timelog row at ID provided.
-          schema:
-            properties:
-              userid:
-                type: string
-                description: ID of the user to which the rows belong
-              taskid:
-                type: string
-                description: ID of the task tracked by the row
-              projectid:
-                type: string
-                description: ID of the project tracked by the row
-              start:
-                type: string
-                description: Timestamp of the start of timing the row
-              stop:
-                type: string
-                description: Timestamp of the stop of timing the row or None if no stop time.

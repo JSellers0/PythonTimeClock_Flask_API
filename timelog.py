@@ -91,9 +91,7 @@ def update_row(timelogid, timelog):
         db.session.merge(update)
         db.session.commit()
 
-        data = schema.dump(update_timelog)
-
-        return data, 200
+        return 201
 
 def read_row_detail(timelogid):
     timelog = Timelog.query.filter(Timelog.timelogid == timelogid).one_or_none()
