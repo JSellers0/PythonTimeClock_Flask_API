@@ -24,7 +24,7 @@ def read_user_rows(userid):
 
 def create(timelog):
     userid = timelog.get("userid")
-    start = dt.strptime(timelog.get("start"), "%Y-%m-%d %H:%M:%S")
+    start = dt.strptime(timelog.get("start"), "%Y-%m-%dT%H:%M:%SZ")
     stop = timelog.get("stop")
 
     if stop == "na":
@@ -35,7 +35,7 @@ def create(timelog):
             .one_or_none()
         )
     else:
-        stop = dt.strptime(timelog.get("stop"), "%Y-%m-%d %H:%M:%S")
+        stop = dt.strptime(timelog.get("stop"), "%Y-%m-%dT%H:%M:%SZ")
         existing_timelog = (
             Timelog.query
             .filter(Timelog.userid == userid)
