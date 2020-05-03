@@ -115,8 +115,9 @@ def read_row_detail(timelogid):
             "noteid": str(note.noteid),
             "note_name": note.note_name,
             "start": timelog.start.strftime("%Y-%m-%d %H:%M:%S"),
-            "stop": timelog.stop.strftime("%Y-%m-%d %H:%M:%S")
         }
+        if timelog.stop:
+            timelog_dump["stop"] = timelog.stop.strftime("%Y-%m-%d %H:%M:%S")
         return json.dumps(timelog_dump), 200
 
 def read_daterange(userid, range_begin, range_end):
