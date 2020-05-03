@@ -570,6 +570,9 @@ paths:
           schema:
             type: object
             properties:
+              timelogid:
+                type: string
+                description: ID of the timelog row to update
               userid:
                 type: string
                 description: ID of the user to which the rows belong

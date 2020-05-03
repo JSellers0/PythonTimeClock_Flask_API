@@ -85,7 +85,7 @@ def update_row(timelogid, timelog):
             "Timelog Row not found for ID: {}".format(timelogid)
         )
     else:
-        schema = TimelogSchema()
+        schema = TimelogSchema(partial=("userid", "projectid", "taskid", "noteid", ))
         update = schema.load(timelog, session=db.session)
 
         db.session.merge(update)
