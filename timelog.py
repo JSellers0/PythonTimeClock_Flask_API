@@ -10,7 +10,6 @@ from marshmallow import INCLUDE
 from sqlalchemy import or_
 
 def read_user_rows(userid):
-    userid = userid.get("userid")
     timelogs = Timelog.query.filter(Timelog.userid == userid).order_by(Timelog.timelogid).all()
 
     if len(timelogs ) == 0:
@@ -125,8 +124,8 @@ def read_row_detail(timelogid):
         return json.dumps(timelog_dump), 200
 
 def read_daterange(userid, range_begin, range_end):
-    range_start = dt.strptime(range_begin, "\"%Y-%m-%d %H:%M:%S\"")
-    range_end = dt.strptime(range_end, "\"%Y-%m-%d %H:%M:%S\"")
+    range_start = dt.strptime(range_begin, "\"%Y-%m-%dT%H:%M:%SZ\"")
+    range_end = dt.strptime(range_end, "\"%Y-%m-%dT%H:%M:%SZ\"")
 
     timelogs = (
         Timelog.query.filter(
