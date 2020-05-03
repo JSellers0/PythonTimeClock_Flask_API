@@ -6,6 +6,7 @@ from datetime import datetime as dt
 from flask import abort
 from models import Timelog, TimelogSchema, Project, Task, Note
 from config import db
+from marshmallow import INCLUDE
 from sqlalchemy import or_
 
 def read_user_rows(userid):
@@ -85,10 +86,12 @@ def update_row(timelogid, timelog):
             "Timelog Row not found for ID: {}".format(timelogid)
         )
     else:
-        schema = TimelogSchema(partial=("userid", "projectid", "taskid", "noteid", ))
-        update = schema.load(timelog, session=db.session)
-
-        db.session.merge(update)
+        update_timelog.projectid = timelog.get("projectid")
+        update_timelog.taskid = timelog.get("taskid")
+        update_timelog.noteid = timelog.get("noteid")
+        update_timelog.start = dt.strptime(timelog.get("start"), "%Y-%m-%dT%H:%M:%SZ")
+        if timelog.get("stop"):
+            update_timelog.stop = dt.strptime(timelog.get("stop"), "%Y-%m-%dT%H:%M:%SZ")
         db.session.commit()
 
         return 201
