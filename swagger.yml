@@ -380,15 +380,9 @@ paths:
       description: Returns all timelog rows for the User's ID
       parameters:
         - name: userid
-          in: body
+          in: query
           description: ID of a User with Timelog rows
           required: True
-          schema:
-            type: object
-            properties:
-              userid:
-                type: string
-                description: ID of the User to search
       responses:
         200:
           description: Successfully read timelog rows for user
