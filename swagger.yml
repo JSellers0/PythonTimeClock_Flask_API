@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   description: This is the swagger file that goes with our server code
   version: "1.0.0"
-  title: Swagger Rest Tutorial - realpython.com/flask-connexion-rest-api
+  title: Timeclock API
 consumes:
   - application/json
 produces:
@@ -38,16 +38,11 @@ paths:
       summary: Create a project
       description: Create a new project
       parameters:
-        - name: project
-          in: body
-          description: Client to create
-          required: True
-          schema:
-            type: object
-            properties:
-              project_name:
-                type: string
-                description: Name of the project to create
+      - in: query
+        name: project_name
+        description: Name of the Project to create
+        type: string
+        required: True
       responses:
         201:
           description: Successfully created project
@@ -89,7 +84,7 @@ paths:
     get:
       operationId: tasks.read_all
       tags:
-        - Clients
+        - Tasks
       summary: Read the entire set of tasks, sorted by task name
       description: Read the entire set of tasks, sorted by task name
       responses:
@@ -108,20 +103,15 @@ paths:
     post:
       operationId: tasks.create
       tags:
-        - Clients
+        - Tasks
       summary: Create a task
       description: Create a new task
       parameters:
-        - name: task
-          in: body
-          description: Client to create
-          required: True
-          schema:
-            type: object
-            properties:
-              task_name:
-                type: string
-                description: Name of the task to create
+      - in: query
+        name: task_name
+        description: Name of the Task to create
+        type: string
+        required: True
       responses:
         201:
           description: Successfully created task
@@ -137,7 +127,7 @@ paths:
     get:
       operationId: tasks.read_one
       tags:
-        - Clients
+        - Tasks
       summary: Read one task
       description: Read one task
       parameters:
@@ -163,7 +153,7 @@ paths:
     get:
       operationId: notes.read_all
       tags:
-        - Clients
+        - Notes
       summary: Read the entire set of notes, sorted by note name
       description: Read the entire set of notes, sorted by note name
       responses:
@@ -182,20 +172,15 @@ paths:
     post:
       operationId: notes.create
       tags:
-        - Clients
+        - Notes
       summary: Create a note
       description: Create a new note
       parameters:
-        - name: note
-          in: body
-          description: Client to create
-          required: True
-          schema:
-            type: object
-            properties:
-              note_name:
-                type: string
-                description: Name of the note to create
+      - in: query
+        name: note_name
+        description: Name of the Note to create
+        type: string
+        required: True
       responses:
         201:
           description: Successfully created note
@@ -211,7 +196,7 @@ paths:
     get:
       operationId: notes.read_one
       tags:
-        - Clients
+        - Notes
       summary: Read one note
       description: Read one note
       parameters:
@@ -379,10 +364,12 @@ paths:
       summary: Read Users Timelog
       description: Returns all timelog rows for the User's ID
       parameters:
-        - name: userid
-          in: query
-          description: ID of a User with Timelog rows
-          required: True
+      - in: query
+        name: userid
+        description: ID of the user to search
+        type: integer
+        description: ID of the user to search
+        required: True
       responses:
         200:
           description: Successfully read timelog rows for user
