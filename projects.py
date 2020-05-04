@@ -20,6 +20,7 @@ def read_one(projectid):
     if project is not None:
         project_schema = ProjectSchema()
         data = project_schema.dump(project)
+        return data, 200
     else:
         abort(
             404,
@@ -31,7 +32,7 @@ def create(project_name):
 
     if existing_project is None:
         schema = ProjectSchema()
-        new_project = schema.load(project, session=db.session)
+        new_project = schema.load({"project_name": project_name}, session=db.session)
 
         db.session.add(new_project)
         db.session.commit()

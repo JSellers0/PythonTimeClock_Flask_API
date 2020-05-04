@@ -20,6 +20,7 @@ def read_one(noteid):
     if note is not None:
         note_schema = NoteSchema()
         data = note_schema.dump(note)
+        return data, 200
     else:
         abort(
             404,
@@ -31,7 +32,7 @@ def create(note_name):
 
     if existing_note is None:
         schema = NoteSchema()
-        new_note = schema.load(note, session=db.session)
+        new_note = schema.load({"note_name": note_name}, session=db.session)
 
         db.session.add(new_note)
         db.session.commit()

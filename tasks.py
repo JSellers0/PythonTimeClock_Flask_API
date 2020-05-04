@@ -18,8 +18,7 @@ def read_one(taskid):
     task = Task.query.filter(Task.taskid == taskid).one_or_none()
 
     if task is not None:
-        task_schema = TaskSchema()
-        data = task_schema.dump(task)
+        return task.to_json(), 200
     else:
         abort(
             404,
@@ -31,7 +30,7 @@ def create(task_name):
 
     if existing_task is None:
         schema = TaskSchema()
-        new_task = schema.load(task, session=db.session)
+        new_task = schema.load({"task_name": task_name}, session=db.session)
 
         db.session.add(new_task)
         db.session.commit()
