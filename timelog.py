@@ -124,8 +124,8 @@ def read_row_detail(timelogid):
         return json.dumps(timelog_dump), 200
 
 def read_daterange(userid, range_begin, range_end):
-    range_start = dt.strptime(range_begin, "\"%Y-%m-%dT%H:%M:%SZ\"")
-    range_end = dt.strptime(range_end, "\"%Y-%m-%dT%H:%M:%SZ\"")
+    range_start = dt.strptime(range_begin, "%Y-%m-%dT%H:%M:%SZ")
+    range_end = dt.strptime(range_end, "%Y-%m-%dT%H:%M:%SZ")
 
     timelogs = (
         Timelog.query.filter(
@@ -154,9 +154,10 @@ def read_daterange(userid, range_begin, range_end):
                 "project_name": project.project_name,
                 "noteid": str(note.noteid),
                 "note_name": note.note_name,
-                "start": timelog.start.strftime("%Y-%m-%d %H:%M:%S"),
-                "stop": timelog.stop.strftime("%Y-%m-%d %H:%M:%S")
+                "start": timelog.start.strftime("%Y-%m-%d %H:%M:%S")
             }
+            if timelog.stop:
+                timelog_row["stop"] = timelog.stop.strftime("%Y-%m-%d %H:%M:%S")
             timelog_dump["rows"].append(timelog_row)
 
             print(timelog_dump)
