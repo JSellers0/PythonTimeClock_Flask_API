@@ -160,8 +160,6 @@ def read_daterange(userid, range_begin, range_end):
                 timelog_row["stop"] = timelog.stop.strftime("%Y-%m-%d %H:%M:%S")
             timelog_dump["rows"].append(timelog_row)
 
-            print(timelog_dump)
-
         return json.dumps(timelog_dump), 200
 
     else:
