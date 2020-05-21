@@ -7,7 +7,7 @@ from flask import abort
 from models import Timelog, TimelogSchema, Project, Task, Note
 from config import db
 from marshmallow import INCLUDE
-from sqlalchemy import or_
+from sqlalchemy import or_, create_engine
 
 def read_user_rows(userid):
     timelogs = Timelog.query.filter(Timelog.userid == userid).order_by(Timelog.timelogid).all()
@@ -171,7 +171,3 @@ def read_daterange(userid, range_begin, range_end):
                 userid=userid, start=range_start, end=range_end
             )
         )
-
-
-
-
