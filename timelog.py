@@ -117,10 +117,10 @@ def read_row_detail(timelogid):
             "project_name": project.project_name,
             "noteid": str(note.noteid),
             "note_name": note.note_name,
-            "start": timelog.start.strftime("%Y-%m-%d %H:%M:%S"),
+            "start": timelog.start.strftime("%Y-%m-%dT%H:%M:%SZ"),
         }
         if timelog.stop:
-            timelog_dump["stop"] = timelog.stop.strftime("%Y-%m-%d %H:%M:%S")
+            timelog_dump["stop"] = timelog.stop.strftime("%Y-%m-%dT%H:%M:%SZ")
         return json.dumps(timelog_dump), 200
 
 def read_daterange(userid, range_begin, range_end):
@@ -154,10 +154,10 @@ def read_daterange(userid, range_begin, range_end):
                 "project_name": project.project_name,
                 "noteid": str(note.noteid),
                 "note_name": note.note_name,
-                "start": timelog.start.strftime("%Y-%m-%d %H:%M:%S")
+                "start": timelog.start.strftime("%Y-%m-%dT%H:%M:%SZ")
             }
             if timelog.stop:
-                timelog_row["stop"] = timelog.stop.strftime("%Y-%m-%d %H:%M:%S")
+                timelog_row["stop"] = timelog.stop.strftime("%Y-%m-%dT%H:%M:%SZ")
             timelog_dump["rows"].append(timelog_row)
 
         return json.dumps(timelog_dump), 200
