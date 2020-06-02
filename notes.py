@@ -13,7 +13,6 @@ def read_all():
     return data
 
 # ToDo: Add read_user: Note.join(user_note_exclude).all()
-
 def read_one(noteid):
     note = Note.query.filter(Note.noteid == noteid).one_or_none()
 
@@ -46,4 +45,32 @@ def create(note_name):
             409,
             "Note {} already exists.".format(note_name)
         )
+
+def update(noteid, note):
+    update_note = Note.query.filter(Note.noteid == noteid).one_or_none()
+
+    new_note_name = note.get("note_name")
+    existing_note = Note.query.filter(Note.note_name == new_note_name).one_or_none()
+
+    if update_note is None:
+        abort(
+            404, 
+            "Note not found for ID {}.".format(noteid)
+        )
+    elif existing_note is not None:
+        abort(
+            409,
+            "Note {} already exists.".format(new_note_name)
+        )
+    else:
+        schema = NoteSchema()
+        update = schema.load(note, session=db.session)
+
+        db.session.merge(update)
+        db.session.commit()
+
+        data = schema.dump(note)
+
+        return data, 200
+
 

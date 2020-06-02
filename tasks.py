@@ -45,3 +45,30 @@ def create(task_name):
             "Task {} already exists.".format(task_name)
         )
 
+def update(taskid, task):
+    update_task = Task.query.filter(Task.taskid == taskid).one_or_none()
+
+    new_task_name = task.get("task_name")
+    existing_task = Task.query.filter(Task.task_name == new_task_name).one_or_none()
+
+    if update_task is None:
+        abort(
+            404, 
+            "Task not found for ID {}.".format(taskid)
+        )
+    elif existing_task is not None:
+        abort(
+            409,
+            "Task {} already exists.".format(new_task_name)
+        )
+    else:
+        schema = TaskSchema()
+        update = schema.load(task, session=db.session)
+
+        db.session.merge(update)
+        db.session.commit()
+
+        data = schema.dump(task)
+
+        return data, 200
+

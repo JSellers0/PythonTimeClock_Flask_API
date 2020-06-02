@@ -79,6 +79,41 @@ paths:
               project_name:
                 type: string
                 description: Name of the project
+    put:
+      operationId: projects.update
+      tags:
+        - Projects
+      summary: Update one Project
+      parameters:
+        - name: projectid
+          in: path
+          description: ID of the Project to Update
+          type: integer
+          required: True
+        - name: project
+          in: body
+          description: Contents of Updated Project fields
+          required: True
+          schema:
+            type: object
+            properties:
+              projectid:
+                type: integer
+                description: ID of existing Project to update
+              project_name:
+                type: string
+                description: Updated name of the Project
+      responses:
+        200:
+          description: Project row updated successfully
+          schema:
+            properties:
+              projectid:
+                type: string
+                description: ID of the Project that was updated.
+              project_name:
+                type: string
+                description: Updated name of the Project.
 
   /tasks:
     get:
@@ -148,6 +183,41 @@ paths:
               task_name:
                 type: string
                 description: Name of the task
+    put:
+      operationId: tasks.update
+      tags:
+        - Tasks
+      summary: Update one Task
+      parameters:
+        - name: taskid
+          in: path
+          description: ID of the Task to Update
+          type: integer
+          required: True
+        - name: task
+          in: body
+          description: Contents of Updated Task fields
+          required: True
+          schema:
+            type: object
+            properties:
+              taskid:
+                type: integer
+                description: ID of existing Task to update
+              task_name:
+                type: string
+                description: Updated name of the Task
+      responses:
+        200:
+          description: Task row updated successfully
+          schema:
+            properties:
+              taskid:
+                type: string
+                description: ID of the Task that was updated.
+              task_name:
+                type: string
+                description: Updated name of the Task.
 
   /notes:
     get:
@@ -217,6 +287,41 @@ paths:
               note_name:
                 type: string
                 description: Name of the note
+    put:
+      operationId: notes.update
+      tags:
+        - Notes
+      summary: Update one Note
+      parameters:
+        - name: noteid
+          in: path
+          description: ID of the Note to Update
+          type: integer
+          required: True
+        - name: note
+          in: body
+          description: Contents of Updated Note fields
+          required: True
+          schema:
+            type: object
+            properties:
+              noteid:
+                type: integer
+                description: ID of existing Note to update
+              note_name:
+                type: string
+                description: Updated name of the Note
+      responses:
+        200:
+          description: Note row updated successfully
+          schema:
+            properties:
+              noteid:
+                type: string
+                description: ID of the Note that was updated.
+              note_name:
+                type: string
+                description: Updated name of the Note.
 
   /users:
     post:
