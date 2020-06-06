@@ -90,7 +90,7 @@ def update_row(timelogid, timelog):
         update_timelog.taskid = timelog.get("taskid")
         update_timelog.noteid = timelog.get("noteid")
         update_timelog.start = dt.strptime(timelog.get("start"), "%Y-%m-%dT%H:%M:%SZ")
-        if timelog.get("stop"):
+        if timelog.get("stop") and timelog.get("stop") != "na":
             update_timelog.stop = dt.strptime(timelog.get("stop"), "%Y-%m-%dT%H:%M:%SZ")
         db.session.commit()
 
