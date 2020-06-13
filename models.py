@@ -11,6 +11,7 @@ class User(db.Model):
     user_name = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     encoded_password = db.Column(db.String(60), nullable=False)
+    timezone = db.Column(db.String(100), nullable=False, default="US/Eastern")
 
     def __repr__(self):
         return "User({}, {})".format(self.username, self.email)
