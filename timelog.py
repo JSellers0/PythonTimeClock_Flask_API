@@ -169,3 +169,24 @@ def read_daterange(userid, range_begin, range_end):
                 userid=userid, start=range_start, end=range_end
             )
         )
+
+def find_timestamp(userid, timestamp):
+    ts = dt.strptime(timestamp, "%Y-%m-%dT%H:%M:%SZ")
+    timelogs = (
+        Timelog.query.filter(
+            Timelog.userid == userid
+            ).filter(or_(
+                Timelog.start == ts,
+                Timelog.stop == ts
+            )).all()
+        )
+
+    if len(timelogs ) == 0:
+        abort(
+            404,
+            "No Timelog rows found for User {}".format(userid)
+        )
+    else:
+        timelog_schema = TimelogSchema(many=True)
+        data = timelog_schema.dump(timelogs)
+        return data, 200

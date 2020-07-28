@@ -674,3 +674,35 @@ paths:
       responses:
         201:
           description: Successfully updated Timelog row at ID provided.
+  /timelog/timestamp:
+    get:
+      operationId: timelog.find_timestamp
+      tags:
+        - Timelog
+      summary: Search for row with matching timestamp
+      description: Search for a row that belongs to a user that has a start or stop time that matches the provided value
+      parameters:
+      - in: query
+        name: userid
+        type: integer
+        description: ID of the user to which timelogs belong
+        required: True
+      - in: query
+        name: timestamp
+        type: string
+        description: Timestamp to use in search
+        required: True
+      responses:
+        200:
+          description: Successfully found a timelog row belonging to the user with a matching timestamp.
+          schema:
+            properties:
+              timelogid:
+                type: integer
+                description: ID of the timelog row that matches the search.
+              start:
+                type: string
+                description: Start time of the timelog row that matches the search.
+              stop:
+                type: string
+                description: Stop time of the timelog row that matches the search.
