@@ -1,5 +1,4 @@
 from flask import Flask
-from flask_bcrypt import Bcrypt
 import config
 
 connex_app = config.connex_app
