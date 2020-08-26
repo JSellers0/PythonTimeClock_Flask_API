@@ -6,7 +6,6 @@ from datetime import datetime as dt
 from flask import abort
 from models import Timelog, TimelogSchema, Project, Task, Note
 from config import db
-from marshmallow import INCLUDE
 from sqlalchemy import or_, create_engine
 
 def read_user_rows(userid):
