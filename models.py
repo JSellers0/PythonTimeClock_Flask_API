@@ -13,15 +13,13 @@ class User(db.Model):
     encoded_password = db.Column(db.String(60), nullable=False)
     timezone = db.Column(db.String(100), nullable=False, default="US/Eastern")
 
-class UserSchema(ma.SQLAlchemySchema):
+    def __repr__(self):
+        return "User({}, {})".format(self.username, self.email)
+
+class UserSchema(ma.Schema):
     class Meta:
         model = User
-        sqla_session = db.Session
-    userid = ma.auto_field()
-    user_name = ma.auto_field
-    email = ma.auto_field
-    encoded_password = ma.auto_field
-    timezone = ma.autofield
+        sqla_session = db.session
 
 class Task(db.Model):
     taskid = db.Column(db.Integer, primary_key=True)
@@ -30,9 +28,10 @@ class Task(db.Model):
     def __repr__(self):
         return "Task({}, {})".format(self.taskid, self.task_name)
 
-class TaskSchema(ma.SQLAlchemyAutoSchema):
+class TaskSchema(ma.ModelSchema):
     class Meta:
         model = Task
+        sqla_session = db.session
 
 class Note(db.Model):
     noteid = db.Column(db.Integer, primary_key=True)
@@ -41,9 +40,10 @@ class Note(db.Model):
     def __repr__(self):
         return "Note({}, {})".format(self.noteid, self.note_name)
 
-class NoteSchema(ma.SQLAlchemyAutoSchema):
+class NoteSchema(ma.Schema):
     class Meta:
         model = Note
+        sqla_session = db.session
 
 class Project(db.Model):
     projectid = db.Column(db.Integer, primary_key=True)
@@ -52,9 +52,10 @@ class Project(db.Model):
     def __repr__(self):
         return "project({}, {})".format(self.projectid, self.project_name)
 
-class ProjectSchema(ma.SQLAlchemyAutoSchema):
+class ProjectSchema(ma.Schema):
     class Meta:
         model = Project
+        sqla_session = db.session
 
 class Timelog(db.Model):
     timelogid = db.Column(db.Integer, primary_key=True)
@@ -76,6 +77,7 @@ class Timelog(db.Model):
             "stop": self.stop
         }
 
-class TimelogSchema(ma.SQLAlchemyAutoSchema):
+class TimelogSchema(ma.Schema):
     class Meta:
         model = Timelog
+        sqla_session = db.session
