@@ -58,7 +58,7 @@ def create(user):
     )
 
     if existing_user is None:
-        new_user = User(user_name, email, encoded_password, timezone)
+        new_user = User(user_name, email, password, timezone)
 
         db.session.add(new_user)
         db.session.commit()
