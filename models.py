@@ -24,7 +24,7 @@ class User(db.Model):
 
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ("user_name", "email", "encoded_password", "timezone")
+        fields = ("userid", "user_name", "email", "encoded_password", "timezone")
 
 class Task(db.Model):
     taskid = db.Column(db.Integer, primary_key=True)
