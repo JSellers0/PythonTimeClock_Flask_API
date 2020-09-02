@@ -12,10 +12,10 @@ connex_app = connexion.App(__name__, specification_dir=basedir)
 # Get the Flask app instance
 app = connex_app.app
 
-sqlite_url = "sqlite:////" + os.path.join(basedir, "timeclock.sqlite")
+db_uri = "mysql://API_clock:" + "M4xG3*@jgOIRdEgmjUfSV" + "@localhost/clock"
 
 app.config["SQLALCHEMY_ECHO"] = True
-app.config["SQLALCHEMY_DATABASE_URI"] = sqlite_url
+app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
@@ -23,4 +23,3 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
 bc = Bcrypt(app)
-    
