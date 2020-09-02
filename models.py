@@ -13,12 +13,15 @@ class User(db.Model):
     encoded_password = db.Column(db.String(60), nullable=False)
     timezone = db.Column(db.String(100), nullable=False, default="US/Eastern")
 
-    def __repr__(self):
-        return "User({}, {})".format(self.username, self.email)
-
-class UserSchema(ma.SQLAlchemyAutoSchema):
+class UserSchema(ma.SQLAlchemySchema):
     class Meta:
         model = User
+        sqla_session = db.Session
+    userid = ma.auto_field()
+    user_name = ma.auto_field
+    email = ma.auto_field
+    encoded_password = ma.auto_field
+    timezone = ma.autofield
 
 class Task(db.Model):
     taskid = db.Column(db.Integer, primary_key=True)

@@ -63,7 +63,7 @@ def create(user):
             "email": email,
             "encoded_password": password
         }
-        new_user = schema.load(new_user, session=db.session)
+        new_user = schema.load(new_user)
 
         db.session.add(new_user)
         db.session.commit()
