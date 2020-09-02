@@ -28,7 +28,7 @@ class Task(db.Model):
     def __repr__(self):
         return "Task({}, {})".format(self.taskid, self.task_name)
 
-class TaskSchema(ma.ModelSchema):
+class TaskSchema(ma.Schema):
     class Meta:
         model = Task
         sqla_session = db.session
