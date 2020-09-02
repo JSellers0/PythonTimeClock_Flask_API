@@ -560,7 +560,7 @@ paths:
                 description: Timestamp of the stop of timing the row or None if no stop time.
   /timelog/daterange:
     get:
-      operationId: objects.imelog.read_daterange
+      operationId: objects.timelog.read_daterange
       tags:
         - Timelog
       summary: Get Date-bound User Rows
