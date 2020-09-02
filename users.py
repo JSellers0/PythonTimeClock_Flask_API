@@ -49,6 +49,7 @@ def create(user):
     as intermediary improvement.  HTTPS + Authentication would be ultimate goal.
     """
     password = bc.generate_password_hash(user.get("encoded_password")).decode("utf-8")
+    timezone = user.get("timezone")
 
     existing_user = (
         User.query.filter(User.user_name == user_name)
@@ -57,13 +58,7 @@ def create(user):
     )
 
     if existing_user is None:
-        schema = UserSchema()
-        new_user = {
-            "user_name": user_name,
-            "email": email,
-            "encoded_password": password
-        }
-        new_user = schema.load(new_user)
+        new_user = User(user_name, email, encoded_password, timezone)
 
         db.session.add(new_user)
         db.session.commit()

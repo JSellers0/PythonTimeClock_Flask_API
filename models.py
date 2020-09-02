@@ -13,6 +13,13 @@ class User(db.Model):
     encoded_password = db.Column(db.String(60), nullable=False)
     timezone = db.Column(db.String(100), nullable=False, default="US/Eastern")
 
+    def __init__(self, user_name, email, encoded_password, timezone=None):
+        self.user_name = user_name
+        self.email = email
+        self.encoded_password = encoded_password
+        if timezone:
+            self.timezone = timezone
+
     def __repr__(self):
         return "User({}, {})".format(self.username, self.email)
 
@@ -20,6 +27,7 @@ class UserSchema(ma.Schema):
     class Meta:
         model = User
         sqla_session = db.session
+        fields = ("user_name", "email", "encoded_password", "timezone")
 
 class Task(db.Model):
     taskid = db.Column(db.Integer, primary_key=True)
