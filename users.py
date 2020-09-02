@@ -48,7 +48,7 @@ def create(user):
     Won't recognize hashes from applications.  Need to look into Authentication requests
     as intermediary improvement.  HTTPS + Authentication would be ultimate goal.
     """
-    password = bc.generate_password_hash(user.get("password")).decode("utf-8")
+    password = bc.generate_password_hash(user.get("encoded_password")).decode("utf-8")
 
     existing_user = (
         User.query.filter(User.user_name == user_name)
