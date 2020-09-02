@@ -11,7 +11,7 @@ produces:
 paths:
   /projects:
     get:
-      operationId: projects.read_all
+      operationId: objects.projects.read_all
       tags:
         - Projects
       summary: Read the entire set of projects, sorted by project name
@@ -30,7 +30,7 @@ paths:
                   type: string
                   description: Name of the project
     post:
-      operationId: projects.create
+      operationId: objects.projects.create
       tags:
         - Projects
       summary: Create a project
@@ -54,7 +54,7 @@ paths:
                 description: Name of the project
   /projects/{projectid}:
     get:
-      operationId: projects.read_one
+      operationId: objects.projects.read_one
       tags:
         - Projects
       summary: Read one project
@@ -78,7 +78,7 @@ paths:
                 type: string
                 description: Name of the project
     put:
-      operationId: projects.update
+      operationId: objects.projects.update
       tags:
         - Projects
       summary: Update one Project
@@ -115,7 +115,7 @@ paths:
 
   /tasks:
     get:
-      operationId: tasks.read_all
+      operationId: objects.tasks.read_all
       tags:
         - Tasks
       summary: Read the entire set of tasks, sorted by task name
@@ -134,7 +134,7 @@ paths:
                   type: string
                   description: Name of the task
     post:
-      operationId: tasks.create
+      operationId: objects.tasks.create
       tags:
         - Tasks
       summary: Create a task
@@ -158,7 +158,7 @@ paths:
                 description: Name of the task
   /tasks/{taskid}:
     get:
-      operationId: tasks.read_one
+      operationId: objects.tasks.read_one
       tags:
         - Tasks
       summary: Read one task
@@ -182,7 +182,7 @@ paths:
                 type: string
                 description: Name of the task
     put:
-      operationId: tasks.update
+      operationId: objects.tasks.update
       tags:
         - Tasks
       summary: Update one Task
@@ -219,7 +219,7 @@ paths:
 
   /notes:
     get:
-      operationId: notes.read_all
+      operationId: objects.notes.read_all
       tags:
         - Notes
       summary: Read the entire set of notes, sorted by note name
@@ -238,7 +238,7 @@ paths:
                   type: string
                   description: Name of the note
     post:
-      operationId: notes.create
+      operationId: objects.notes.create
       tags:
         - Notes
       summary: Create a note
@@ -262,7 +262,7 @@ paths:
                 description: Name of the note
   /notes/{noteid}:
     get:
-      operationId: notes.read_one
+      operationId: objects.notes.read_one
       tags:
         - Notes
       summary: Read one note
@@ -286,7 +286,7 @@ paths:
                 type: string
                 description: Name of the note
     put:
-      operationId: notes.update
+      operationId: objects.notes.update
       tags:
         - Notes
       summary: Update one Note
@@ -323,7 +323,7 @@ paths:
 
   /users:
     post:
-      operationId: users.create
+      operationId: objects.users.create
       tags:
         - Users
       summary: Create a user
@@ -361,7 +361,7 @@ paths:
                 description: Email address of the user
   /users/{userid}:
     put:
-      operationId: users.update
+      operationId: objects.users.update
       tags:
         - Users
       summary: Update user
@@ -393,7 +393,7 @@ paths:
           description: Successfully updated user
   /users/name:
     post:
-      operationId: users.read_name
+      operationId: objects.users.read_name
       tags:
         - Users
       summary: Read one user by Username
@@ -428,7 +428,7 @@ paths:
                 description: Email address of the user
   /users/email:
     get:
-      operationId: users.read_email
+      operationId: objects.users.read_email
       tags:
         - Users
       summary: Verify user email for password recovery
@@ -461,7 +461,7 @@ paths:
 
   /timelog:
     get:
-      operationId: timelog.read_user_rows
+      operationId: objects.timelog.read_user_rows
       tags:
         - Timelog
       summary: Read Users Timelog
@@ -501,7 +501,7 @@ paths:
                 type: string
                 description: Timestamp of the stop of timing the row or None if no stop time.
     post:
-      operationId: timelog.create
+      operationId: objects.timelog.create
       tags:
         - Timelog
       summary: Create a Timelog row
@@ -560,7 +560,7 @@ paths:
                 description: Timestamp of the stop of timing the row or None if no stop time.
   /timelog/daterange:
     get:
-      operationId: timelog.read_daterange
+      operationId: objects.imelog.read_daterange
       tags:
         - Timelog
       summary: Get Date-bound User Rows
@@ -603,7 +603,7 @@ paths:
                 description: Timestamp of the stop of timing the row or None if no stop time.
   /timelog/{timelogid}:
     get:
-      operationId: timelog.read_row_detail
+      operationId: objects.timelog.read_row_detail
       tags:
         - Timelog
       summary: Read Timelog row with Detail
@@ -636,7 +636,7 @@ paths:
                 type: string
                 description: ID of the user assigned to the row
     put:
-      operationId: timelog.update_row
+      operationId: objects.timelog.update_row
       tags:
         - Timelog
       summary: Update a timelog row
@@ -674,7 +674,7 @@ paths:
           description: Successfully updated Timelog row at ID provided.
   /timelog/timestamp:
     get:
-      operationId: timelog.find_timestamp
+      operationId: objects.timelog.find_timestamp
       tags:
         - Timelog
       summary: Search for row with matching timestamp

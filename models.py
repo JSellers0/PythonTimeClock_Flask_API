@@ -30,37 +30,43 @@ class Task(db.Model):
     taskid = db.Column(db.Integer, primary_key=True)
     task_name = db.Column(db.String(100), unique=True, nullable=False)
 
+    def __init__(self, task_name):
+        self.task_name = task_name
+
     def __repr__(self):
         return "Task({}, {})".format(self.taskid, self.task_name)
 
 class TaskSchema(ma.Schema):
     class Meta:
-        model = Task
-        sqla_session = db.session
+        fields = ("task_name")
 
 class Note(db.Model):
     noteid = db.Column(db.Integer, primary_key=True)
     note_name = db.Column(db.String(100), unique=True, nullable=False)
+
+    def __init__(self, note_name):
+        self.task_name = note_name
 
     def __repr__(self):
         return "Note({}, {})".format(self.noteid, self.note_name)
 
 class NoteSchema(ma.Schema):
     class Meta:
-        model = Note
-        sqla_session = db.session
+        fields = ("note_name")
 
 class Project(db.Model):
     projectid = db.Column(db.Integer, primary_key=True)
     project_name = db.Column(db.String(100), unique=True, nullable=False)
+
+    def __init__(self, project_name):
+        self.task_name = project_name
 
     def __repr__(self):
         return "project({}, {})".format(self.projectid, self.project_name)
 
 class ProjectSchema(ma.Schema):
     class Meta:
-        model = Project
-        sqla_session = db.session
+        fields = ("project_name")
 
 class Timelog(db.Model):
     timelogid = db.Column(db.Integer, primary_key=True)
@@ -70,6 +76,14 @@ class Timelog(db.Model):
     projectid = db.Column(db.Integer, db.ForeignKey("project.projectid"), nullable=False)
     taskid = db.Column(db.Integer, db.ForeignKey("task.taskid"), nullable=False)
     noteid = db.Column(db.Integer, db.ForeignKey("note.noteid"), nullable=False)
+
+    def __init__(self, start, stop, userid, projectid, taskid, noteid):
+        self.start = start
+        self.stop = stop
+        self.userid = userid
+        self.projectid = projectid
+        self.taskid = taskid
+        self.noteid = noteid
 
     def to_json(self):
         return {
@@ -84,5 +98,4 @@ class Timelog(db.Model):
 
 class TimelogSchema(ma.Schema):
     class Meta:
-        model = Timelog
-        sqla_session = db.session
+        fields = ("start", "stop", "userid", "projectid", "taskid", "noteid")
