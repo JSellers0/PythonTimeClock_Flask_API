@@ -29,12 +29,12 @@ def create(task_name):
     existing_task = Task.query.filter(Task.task_name == task_name).one_or_none()
 
     if existing_task is None:
-        schema = TaskSchema()
-        new_task = schema.load({"task_name": task_name}, session=db.session)
+        new_task = Task(task_name)
 
         db.session.add(new_task)
         db.session.commit()
 
+        schema = TaskSchema()
         data = schema.dump(new_task)
 
         return data, 201

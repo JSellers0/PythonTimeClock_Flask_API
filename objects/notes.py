@@ -30,12 +30,12 @@ def create(note_name):
     existing_note = Note.query.filter(Note.note_name == note_name).one_or_none()
 
     if existing_note is None:
-        schema = NoteSchema()
-        new_note = schema.load({"note_name": note_name}, session=db.session)
+        new_note = Note(note_name)
 
         db.session.add(new_note)
         db.session.commit()
 
+        schema = NoteSchema()
         data = schema.dump(new_note)
 
         return data, 201
@@ -64,7 +64,7 @@ def update(noteid, note):
         )
     else:
         schema = NoteSchema()
-        update = schema.load(note, session=db.session)
+        update = schema.load(note)
 
         db.session.merge(update)
         db.session.commit()

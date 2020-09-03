@@ -31,12 +31,12 @@ def create(project_name):
     existing_project = Project.query.filter(Project.project_name == project_name).one_or_none()
 
     if existing_project is None:
-        schema = ProjectSchema()
-        new_project = schema.load({"project_name": project_name}, session=db.session)
+        new_project = Project(project_name)
 
         db.session.add(new_project)
         db.session.commit()
 
+        schema = ProjectSchema()
         data = schema.dump(new_project)
 
         return data, 201
