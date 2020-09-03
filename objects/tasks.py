@@ -45,11 +45,10 @@ def create(task_name):
             "Task {} already exists.".format(task_name)
         )
 
-def update(taskid, task):
+def update(taskid, task_name):
     update_task = Task.query.filter(Task.taskid == taskid).one_or_none()
 
-    new_task_name = task.get("task_name")
-    existing_task = Task.query.filter(Task.task_name == new_task_name).one_or_none()
+    existing_task = Task.query.filter(Task.task_name == task_name).one_or_none()
 
     if update_task is None:
         abort(
@@ -59,16 +58,17 @@ def update(taskid, task):
     elif existing_task is not None:
         abort(
             409,
-            "Task {} already exists.".format(new_task_name)
+            "Task {} already exists.".format(task_name)
         )
     else:
-        schema = TaskSchema()
-        update = schema.load(task, session=db.session)
+        update = Task(task_name)
+        update.taskid = taskid
 
         db.session.merge(update)
         db.session.commit()
 
-        data = schema.dump(task)
+        schema = TaskSchema()
+        data = schema.dump(update)
 
         return data, 200
 

@@ -47,11 +47,10 @@ def create(project_name):
             "Project {} already exists.".format(project_name)
         )
 
-def update(projectid, project):
+def update(projectid, project_name):
     update_project = Project.query.filter(Project.projectid == projectid).one_or_none()
 
-    new_project_name = project.get("project_name")
-    existing_project = Project.query.filter(Project.project_name == new_project_name).one_or_none()
+    existing_project = Project.query.filter(Project.project_name == project_name).one_or_none()
 
     if update_project is None:
         abort(
@@ -61,16 +60,17 @@ def update(projectid, project):
     elif existing_project is not None:
         abort(
             409,
-            "Project {} already exists.".format(new_project_name)
+            "Project {} already exists.".format(project_name)
         )
     else:
-        schema = ProjectSchema()
-        update = schema.load(project, session=db.session)
+        update = Project(project_name)
+        update.projectid = projectid
 
         db.session.merge(update)
         db.session.commit()
 
-        data = schema.dump(project)
+        schema = ProjectSchema()
+        data = schema.dump(update)
 
         return data, 200
 

@@ -63,8 +63,7 @@ def update(noteid, note_name):
         )
     else:
         update = Note(note_name)
-
-        Note.noteid = noteid
+        update.noteid = noteid
 
         db.session.merge(update)
         db.session.commit()
