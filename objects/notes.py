@@ -46,11 +46,10 @@ def create(note_name):
             "Note {} already exists.".format(note_name)
         )
 
-def update(noteid, note):
+def update(noteid, note_name):
     update_note = Note.query.filter(Note.noteid == noteid).one_or_none()
 
-    new_note_name = note.get("note_name")
-    existing_note = Note.query.filter(Note.note_name == new_note_name).one_or_none()
+    existing_note = Note.query.filter(Note.note_name == note_name).one_or_none()
 
     if update_note is None:
         abort(
@@ -60,16 +59,18 @@ def update(noteid, note):
     elif existing_note is not None:
         abort(
             409,
-            "Note {} already exists.".format(new_note_name)
+            "Note {} already exists.".format(note_name)
         )
     else:
-        schema = NoteSchema()
-        update = schema.load(note)
+        update = Note(note_name)
+
+        Note.noteid = noteid
 
         db.session.merge(update)
         db.session.commit()
 
-        data = schema.dump(note)
+        schema = NoteSchema()
+        data = schema.dump(update)
 
         return data, 200
 

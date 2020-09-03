@@ -88,19 +88,11 @@ paths:
           description: ID of the Project to Update
           type: integer
           required: True
-        - name: project
-          in: body
-          description: Contents of Updated Project fields
+        - in: query
+          name: project_name
+          description: Name to apply to Project matching ID submitted.
+          type: string
           required: True
-          schema:
-            type: object
-            properties:
-              projectid:
-                type: integer
-                description: ID of existing Project to update
-              project_name:
-                type: string
-                description: Updated name of the Project
       responses:
         200:
           description: Project row updated successfully
@@ -192,19 +184,11 @@ paths:
           description: ID of the Task to Update
           type: integer
           required: True
-        - name: task
-          in: body
-          description: Contents of Updated Task fields
+        - in: query
+          name: task_name
+          description: Name to apply to Task matching ID submitted
+          type: string
           required: True
-          schema:
-            type: object
-            properties:
-              taskid:
-                type: integer
-                description: ID of existing Task to update
-              task_name:
-                type: string
-                description: Updated name of the Task
       responses:
         200:
           description: Task row updated successfully
@@ -291,24 +275,16 @@ paths:
         - Notes
       summary: Update one Note
       parameters:
-        - name: noteid
-          in: path
+        - in: path
+          name: noteid
           description: ID of the Note to Update
           type: integer
           required: True
-        - name: note
-          in: body
-          description: Contents of Updated Note fields
+        - in: query
+          name: note_name
+          description: Name to apply to Note matching ID submitted
+          type: string
           required: True
-          schema:
-            type: object
-            properties:
-              noteid:
-                type: integer
-                description: ID of existing Note to update
-              note_name:
-                type: string
-                description: Updated name of the Note
       responses:
         200:
           description: Note row updated successfully
