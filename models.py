@@ -38,7 +38,7 @@ class Task(db.Model):
 
 class TaskSchema(ma.Schema):
     class Meta:
-        fields = ("task", "task_name")
+        fields = ("taskid", "task_name")
 
 class Note(db.Model):
     noteid = db.Column(db.Integer, primary_key=True)

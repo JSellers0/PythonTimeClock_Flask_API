@@ -18,7 +18,10 @@ def read_one(taskid):
     task = Task.query.filter(Task.taskid == taskid).one_or_none()
 
     if task is not None:
-        return task.to_json(), 200
+        schema = TaskSchema()
+        data = schema.dump(task)
+        return data, 200
+
     else:
         abort(
             404,
