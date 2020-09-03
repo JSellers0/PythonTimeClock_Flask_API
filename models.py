@@ -59,7 +59,7 @@ class Project(db.Model):
     project_name = db.Column(db.String(100), unique=True, nullable=False)
 
     def __init__(self, project_name):
-        self.task_name = project_name
+        self.project_name = project_name
 
     def __repr__(self):
         return "project({}, {})".format(self.projectid, self.project_name)
