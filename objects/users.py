@@ -5,14 +5,13 @@ from flask import abort, make_response
 from models import User, UserSchema
 from config import db, bc
 
-def read_name(user):
-    user_name = user.get("user_name")
-    sub_password = user.get("password")
+def read_token(token):
+    user_token = token.get("user_token")
+    
+    user = User.query.filter(User.user_token == user_token).one_or_none()
 
-    user = User.query.filter(User.user_name == user_name).one_or_none()
-
-    if user is not None and bc.check_password_hash(user.encoded_password, sub_password):
-        user_schema = UserSchema(exclude=["encoded_password"])
+    if user is not None:
+        user_schema = UserSchema(exclude=["user_token"])
         data = user_schema.dump(user)
         return data, 200
     elif user is None:
@@ -43,12 +42,7 @@ def read_email(user):
 def create(user):
     user_name = user.get("user_name")
     email = user.get("email")
-    # ToDo: Better handling of passwords between clients and server.
-    """   
-    Won't recognize hashes from applications.  Need to look into Authentication requests
-    as intermediary improvement.  HTTPS + Authentication would be ultimate goal.
-    """
-    password = bc.generate_password_hash(user.get("encoded_password")).decode("utf-8")
+    token = user.get("user_token")
     timezone = user.get("timezone")
 
     existing_user = (
@@ -58,12 +52,12 @@ def create(user):
     )
 
     if existing_user is None:
-        new_user = User(user_name, email, password, timezone)
+        new_user = User(user_name, email, token, timezone)
 
         db.session.add(new_user)
         db.session.commit()
 
-        dump_schema = UserSchema(exclude=["encoded_password"])
+        dump_schema = UserSchema(exclude=["user_token"])
 
         data = dump_schema.dump(new_user)
 
