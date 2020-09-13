@@ -395,13 +395,16 @@ paths:
             properties:
               userid:
                 type: string
-                description: ID of the user
+                description: ID of the user.
               user_name:
                 type: string
-                description: Username of the user
+                description: Username of the user.
               email:
                 type: string
-                description: Email address of the user
+                description: Email address of the user.
+              timezone:
+                type: string
+                description: Timezone setting of the user.
   /users/email:
     get:
       operationId: objects.users.read_email
