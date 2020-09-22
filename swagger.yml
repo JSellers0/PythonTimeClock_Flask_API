@@ -326,15 +326,15 @@ paths:
           description: Successfully created user
           schema:
             properties:
-              userid:
-                type: string
-                description: ID of the user
               user_name:
                 type: string
                 description: Username of the user
               email:
                 type: string
                 description: Email address of the user
+              timezone:
+                type: string
+                description: Timezone of the user.
   /users/{userid}:
     put:
       operationId: objects.users.update
@@ -367,13 +367,13 @@ paths:
       responses:
         200:
           description: Successfully updated user
-  /users/name:
+  /users/token:
     post:
-      operationId: objects.users.read_name
+      operationId: objects.users.read_token
       tags:
         - Users
-      summary: Read one user by Username
-      description: Return a user that matches username and password submitted for verification
+      summary: Read one user by user token.
+      description: Return a user that matches token submitted for verification.
       parameters:
         - name: user
           in: body
@@ -382,12 +382,9 @@ paths:
           schema:
             type: object
             properties:
-              user_name:
+              user_token:
                 type: string
-                description: Name of the user to search
-              password:
-                type: string
-                description: User password submitted to application for verification
+                description: Cryptographically generated token for user.
       responses:
         200:
           description: Successfully found user with Username

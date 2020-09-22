@@ -11,18 +11,13 @@ def read_token(token):
     user = User.query.filter(User.user_token == user_token).one_or_none()
 
     if user is not None:
-        user_schema = UserSchema(exclude=["user_token"])
+        user_schema = UserSchema(exclude=["userid", "user_token"])
         data = user_schema.dump(user)
         return data, 200
-    elif user is None:
-        abort(
-            404,
-            "User record not found for {}.".format(user_name)
-        )
     else :
         abort(
             404,
-            "Incorrect password for {}.".format(user_name)
+            "User not found."
         )
 
 def read_email(user):
