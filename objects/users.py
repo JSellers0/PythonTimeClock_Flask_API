@@ -5,8 +5,8 @@ from flask import abort, make_response
 from models import User, UserSchema
 from config import db, bc
 
-def read_token(token):
-    user_token = token.get("user_token")
+def read_token(user):
+    user_token = user.get("user_token")
     
     user = User.query.filter(User.user_token == user_token).one_or_none()
 
