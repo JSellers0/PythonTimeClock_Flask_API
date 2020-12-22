@@ -1,3 +1,4 @@
 *.pyc
 *.sqlite
 tests/*
+.vscode/settings.json
