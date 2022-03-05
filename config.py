@@ -15,7 +15,7 @@ connex_app = connexion.App(__name__, specification_dir=basedir)
 # Get the Flask app instance
 app = connex_app.app
 
-db_uri = "mysql://clock:" + os.getenv('PYCLOCK_MYSQL_USER') + "@" + os.getenv("PYCLOCK_MYSQL_HOST") + "/clock"
+db_uri = "mysql://os.getenv('PYCLOCK_MYSQL_USER'):" + os.getenv('PYCLOCK_MYSQL_PASS') + "@" + os.getenv("PYCLOCK_MYSQL_HOST") + "/clock"
 
 app.config["SQLALCHEMY_ECHO"] = True
 app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
