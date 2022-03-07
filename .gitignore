@@ -4,3 +4,4 @@ tests/*
 .vscode/settings.json
 myfb.py
 env_*
+requirements.txt
