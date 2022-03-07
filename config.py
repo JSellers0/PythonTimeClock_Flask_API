@@ -3,9 +3,7 @@ import connexion
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_bcrypt import Bcrypt
-from dotenv import load_dotenv
-
-load_dotenv()
+from myfb import pcmu, pcmp, pcmh
 
 basedir = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 
@@ -15,7 +13,7 @@ connex_app = connexion.App(__name__, specification_dir=basedir)
 # Get the Flask app instance
 app = connex_app.app
 
-db_uri = f"mysql://{os.getenv('PYCLOCK_MYSQL_USER')}:{os.getenv('PYCLOCK_MYSQL_PASS')}@{os.getenv('PYCLOCK_MYSQL_HOST')}/clock"
+db_uri = f"mysql+mysqlconnector://{pcmu}:{pcmp}@{pcmh}/clock"
 
 app.config["SQLALCHEMY_ECHO"] = True
 app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
