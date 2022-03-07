@@ -1,0 +1,9 @@
+connexion[swagger-ui]
+flask
+flask-bcrypt
+flask-marshmallow
+flask-sqlalchemy
+marshmallow-sqlalchemy
+mysql-connector-python
+swagger
+python-dotenv
